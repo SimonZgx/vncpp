@@ -3,10 +3,10 @@
 //
 
 #include <iostream>
-#include "Bybit"
+#include "BybitGateway.h"
 using namespace std;
 
 int main() {
-    cout << "Hello World" << endl;
+
     return 0;
 }

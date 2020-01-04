@@ -7,6 +7,7 @@
 
 
 #include "BaseGateway.h"
+#include "RestClient.h"
 #include <string>
 
 using namespace std;
@@ -32,7 +33,10 @@ namespace bybit {
 
 
 class BybitGateway : BaseGateway {
-
+private:
+    RestClient restClient;
+public:
+    BybitGateway(RestClient restClient){ this->restClient=restClient;}
 };
 
 
