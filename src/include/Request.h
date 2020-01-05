@@ -16,7 +16,7 @@ class Request {
 private:
     ReqParam requestParam;
 public:
-    void sign
+    void sign();
 };
 
 

@@ -13,6 +13,7 @@ class RestClient {
 private:
     string baseUrl;
 public:
+    RestClient();
     RestClient(string url){this->baseUrl = url;}
 };
 

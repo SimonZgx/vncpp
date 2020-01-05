@@ -3,10 +3,13 @@
 //
 
 #include <iostream>
-#include "BybitGateway.h"
+#include "trader/BaseGateway.h"
+#include "Test.h"
 using namespace std;
 
 int main() {
-
+    BaseGateway& gateway = BaseGateway::GetInstance();
+//    Test* test = new Test();
+//    test->SayHello();
     return 0;
 }

@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/simon/git/vncpp/src/trader/BaseGateway.cpp
+BaseGateway.h
+/Users/simon/git/vncpp/src/trader/BaseGateway.h
+
+/Users/simon/git/vncpp/src/trader/BaseGateway.h
+OrderData.h
+/Users/simon/git/vncpp/src/trader/OrderData.h
+curl/curl.h
+/Users/simon/git/vncpp/src/trader/curl/curl.h
+stdio.h
+-
+
+src/include/OrderData.h
+iostream
+-
+string
+-
+ostream
+-
+enum.h
+src/include/enum.h
+
+src/include/enum.h
+string
+-
+iostream
+-
+

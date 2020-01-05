@@ -2,3 +2,5 @@
 *.log
 cmake-build-debug
 out
+.cmake
+main

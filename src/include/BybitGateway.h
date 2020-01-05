@@ -6,7 +6,7 @@
 #define MAIN_BYBITGATEWAY_H
 
 
-#include "BaseGateway.h"
+#include "../trader/BaseGateway.h"
 #include "RestClient.h"
 #include <string>
 
@@ -34,9 +34,15 @@ namespace bybit {
 
 class BybitGateway : BaseGateway {
 private:
-    RestClient restClient;
+    RestClient *restClient;
+    CURL *curl;
+
+    void Init();
+
 public:
-    BybitGateway(RestClient restClient){ this->restClient=restClient;}
+    BybitGateway(string baseUrl);
+
+    void QuerySymbols(string &path);
 };
 
 

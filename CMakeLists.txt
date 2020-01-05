@@ -4,8 +4,9 @@ project(main)
 
 add_definitions(-std=c++14)
 
-aux_source_directory(src DIR_SRCS)
+aux_source_directory(. DIR_SRCS)
 link_libraries(curl)
 include_directories(src/include)
+include_directories(${DIR_SRCS})
 
-add_executable(main src/main.cpp src/include/enum.h test/test_libcurl/main.cpp src/gateway/bybit/rest/BybitRestClient.cpp src/include/BybitRestClient.h src/trader/RestClient.cpp src/include/RestClient.h src/trader/Request.cpp src/include/Request.h)
+add_executable(main src/main.cpp src/include/Test.cpp src/include/Test.h src/trader/BaseGateway.cpp)
