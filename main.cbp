@@ -44,7 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="clang"/>
 				<Compiler>
-					<Add directory="/Users/simon/git/vncpp/src/include"/>
+					<Add directory="/Users/simon/git/vncpp/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/Users/simon/git/vncpp/Makefile&quot;  VERBOSE=1 main"/>
@@ -60,7 +60,7 @@
 				<Option type="1"/>
 				<Option compiler="clang"/>
 				<Compiler>
-					<Add directory="/Users/simon/git/vncpp/src/include"/>
+					<Add directory="/Users/simon/git/vncpp/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/Users/simon/git/vncpp/Makefile&quot;  VERBOSE=1 main/fast"/>
@@ -70,19 +70,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/simon/git/vncpp/src/include/Test.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/src/include/Test.h">
-			<Option target="main"/>
-		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/main.cpp">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/trader/BaseGateway.cpp">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/src/trader/BaseGateway.h">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/CMakeLists.txt">

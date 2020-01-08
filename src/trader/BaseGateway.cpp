@@ -1,22 +1,14 @@
 //
-// Created by Simon on 2020/1/2.
+// Created by Simon on 2020/1/7.
 //
 
 #include "BaseGateway.h"
-BaseGateway::BaseGateway() {
-    this->Init();
-};
+#include <iostream>
 
-void BaseGateway::Init() {
-    fprintf(nullptr, "init curl\n");
-    curl_global_init(CURL_GLOBAL_DEFAULT);
-}
+using namespace std;
 
-BaseGateway &BaseGateway::GetInstance() {
-    static BaseGateway m_pInstance;
-    return m_pInstance;
-}
 
-void BaseGateway::QuerySymbols(string &path) {
-    fprintf(0, "QuerySymbols");
+
+BaseGateway::BaseGateway(){
+
 }

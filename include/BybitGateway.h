@@ -6,12 +6,12 @@
 #define MAIN_BYBITGATEWAY_H
 
 
-#include "../trader/BaseGateway.h"
-#include "RestClient.h"
+#include "BaseGateway.h"
 #include <string>
-
+#include <map>
 using namespace std;
 
+typedef std::map<std::string, std::string> Setting;
 namespace bybit {
     const std::string Side[]{
             "Buy",
@@ -34,15 +34,18 @@ namespace bybit {
 
 class BybitGateway : BaseGateway {
 private:
-    RestClient *restClient;
-    CURL *curl;
+    CURL* curl;
+    const char* key;
+    const char* secret;
+    const char* baseUrl;
 
-    void Init();
 
 public:
-    BybitGateway(string baseUrl);
+    BybitGateway(const char*, Setting);
+    static shared_ptr<BybitGateway> GetInstance(const char*, Setting);
+    static shared_ptr<BybitGateway> instance;
 
-    void QuerySymbols(string &path);
+    void QuerySymbols(const char*);
 };
 
 

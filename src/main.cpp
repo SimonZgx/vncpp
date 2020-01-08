@@ -3,13 +3,12 @@
 //
 
 #include <iostream>
-#include "trader/BaseGateway.h"
-#include "Test.h"
+#include "BybitGateway.h"
+#include <map>
 using namespace std;
 
 int main() {
-    BaseGateway& gateway = BaseGateway::GetInstance();
-//    Test* test = new Test();
-//    test->SayHello();
+    map<std::string, std::string> param{{"key",""}};
+    shared_ptr<BybitGateway> client = BybitGateway::GetInstance("https://api.bybit.com", param);
     return 0;
 }

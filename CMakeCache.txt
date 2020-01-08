@@ -202,6 +202,18 @@ CMAKE_STRIP:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+Project_BINARY_DIR:STATIC=/Users/simon/git/vncpp
+
+//Value Computed by CMake
+Project_SOURCE_DIR:STATIC=/Users/simon/git/vncpp
+
+//Value Computed by CMake
+VNCPP_BINARY_DIR:STATIC=/Users/simon/git/vncpp
+
+//Value Computed by CMake
+VNCPP_SOURCE_DIR:STATIC=/Users/simon/git/vncpp
+
+//Value Computed by CMake
 main_BINARY_DIR:STATIC=/Users/simon/git/vncpp
 
 //Value Computed by CMake

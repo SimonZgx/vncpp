@@ -123,33 +123,6 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-src/include/Test.o: src/include/Test.cpp.o
-
-.PHONY : src/include/Test.o
-
-# target to build an object file
-src/include/Test.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/include/Test.cpp.o
-.PHONY : src/include/Test.cpp.o
-
-src/include/Test.i: src/include/Test.cpp.i
-
-.PHONY : src/include/Test.i
-
-# target to preprocess a source file
-src/include/Test.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/include/Test.cpp.i
-.PHONY : src/include/Test.cpp.i
-
-src/include/Test.s: src/include/Test.cpp.s
-
-.PHONY : src/include/Test.s
-
-# target to generate assembly for a file
-src/include/Test.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/include/Test.cpp.s
-.PHONY : src/include/Test.cpp.s
-
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -213,9 +186,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main"
-	@echo "... src/include/Test.o"
-	@echo "... src/include/Test.i"
-	@echo "... src/include/Test.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
