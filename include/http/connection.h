@@ -9,7 +9,6 @@
 #include <string>
 #include "RestClient.h"
 
-using namespace restclient;
 namespace Http{
 
     typedef struct {
@@ -25,7 +24,7 @@ namespace Http{
 
     typedef struct {
         std::string baseUrl;
-        Header headers;
+        restclient::Header headers;
         int timeout;
         bool followRedirects;
         int maxRedirects;
@@ -46,12 +45,15 @@ namespace Http{
     } Config;
 
     class Connection{
+    private:
+        std::string baseUrl;
     public:
         Request request;
 
         explicit Connection(const std::string& baseUrl);
         ~Connection();
 
+        restclient::Response performCurlRequest(const std::string& uri);
         // Instance configuration methods
         // configure basic auth
         void SetBasicAuth(const std::string& username,
@@ -95,13 +97,13 @@ namespace Http{
 
         std::string GetUserAgent();
 
-        RestClient::Connection::Info GetInfo();
+        Http::Config GetInfo();
 
         // set headers
-        void SetHeaders(RestClient::HeaderFields headers);
+        void SetHeaders(restclient::Header headers);
 
         // get headers
-        RestClient::HeaderFields GetHeaders();
+        restclient::Header GetHeaders();
 
         // append additional headers
         void AppendHeader(const std::string& key,
@@ -109,16 +111,16 @@ namespace Http{
 
 
         // Basic HTTP verb methods
-        Response get(const std::string& uri);
-        Response post(const std::string& uri,
+        restclient::Response get(const std::string& uri);
+        restclient::Response post(const std::string& uri,
                                   const std::string& data);
-        Response put(const std::string& uri,
+        restclient::Response put(const std::string& uri,
                                  const std::string& data);
-        Response patch(const std::string& uri,
+        restclient::Response patch(const std::string& uri,
                                    const std::string& data);
-        Response del(const std::string& uri);
-        Response head(const std::string& uri);
-        Response options(const std::string& uri);
+        restclient::Response del(const std::string& uri);
+        restclient::Response head(const std::string& uri);
+        restclient::Response options(const std::string& uri);
     };
 }
 
