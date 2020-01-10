@@ -8,6 +8,7 @@
 #include <curl/curl.h>
 #include <string>
 #include "RestClient.h"
+#include <iostream>
 
 namespace Http{
 
@@ -46,81 +47,23 @@ namespace Http{
 
     class Connection{
     private:
+
+        CURL* curl;
         std::string baseUrl;
+        restclient::Header headerFields;
+        int timeout;
+        bool followRedirects;
+        int maxRedirects;
+        bool noSignal;
     public:
         Request request;
 
         explicit Connection(const std::string& baseUrl);
         ~Connection();
 
-        restclient::Response performCurlRequest(const std::string& uri);
-        // Instance configuration methods
-        // configure basic auth
-        void SetBasicAuth(const std::string& username,
-                          const std::string& password);
-
-        // set connection timeout to seconds
-        void SetTimeout(int seconds);
-
-        // set to not use signals
-        void SetNoSignal(bool no);
-
-        // set whether to follow redirects, maxRedirects indicitng the maximum
-        // number of redirects to follow
-        void FollowRedirects(bool follow, int maxRedirects = -1l);
-
-        // set custom user agent
-        // (this will result in the UA "foo/cool restclient-cpp/VERSION")
-        void SetUserAgent(const std::string& userAgent);
-
-        // set the Certificate Authority (CA) Info which is the path to file holding
-        // certificates to be used to verify peers. See CURLOPT_CAINFO
-        void SetCAInfoFilePath(const std::string& caInfoFilePath);
-
-        // set CURLOPT_SSLCERT
-        void SetCertPath(const std::string& cert);
-
-        // set CURLOPT_SSLCERTTYPE
-        void SetCertType(const std::string& type);
-
-        // set CURLOPT_SSLKEY. Default format is PEM
-        void SetKeyPath(const std::string& keyPath);
-
-        // set CURLOPT_KEYPASSWD.
-        void SetKeyPassword(const std::string& keyPassword);
-
-        // set CURLOPT_PROXY
-        void SetProxy(const std::string& uriProxy);
-
-        // set CURLOPT_UNIX_SOCKET_PATH
-        void SetUnixSocketPath(const std::string& unixSocketPath);
-
-        std::string GetUserAgent();
-
-        Http::Config GetInfo();
-
-        // set headers
-        void SetHeaders(restclient::Header headers);
-
-        // get headers
-        restclient::Header GetHeaders();
-
-        // append additional headers
-        void AppendHeader(const std::string& key,
-                          const std::string& value);
+        void performCurlRequest(const std::string& uri, size_t callBack(char *, size_t , size_t, void *));
 
 
-        // Basic HTTP verb methods
-        restclient::Response get(const std::string& uri);
-        restclient::Response post(const std::string& uri,
-                                  const std::string& data);
-        restclient::Response put(const std::string& uri,
-                                 const std::string& data);
-        restclient::Response patch(const std::string& uri,
-                                   const std::string& data);
-        restclient::Response del(const std::string& uri);
-        restclient::Response head(const std::string& uri);
-        restclient::Response options(const std::string& uri);
     };
 }
 

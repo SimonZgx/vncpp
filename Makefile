@@ -69,8 +69,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/local/Cellar/cmake/3.15.4/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -150,32 +150,59 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/trader/BaseGateway.o: src/trader/BaseGateway.cpp.o
+src/trader/RestClient.o: src/trader/RestClient.cpp.o
 
-.PHONY : src/trader/BaseGateway.o
+.PHONY : src/trader/RestClient.o
 
 # target to build an object file
-src/trader/BaseGateway.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.o
-.PHONY : src/trader/BaseGateway.cpp.o
+src/trader/RestClient.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.o
+.PHONY : src/trader/RestClient.cpp.o
 
-src/trader/BaseGateway.i: src/trader/BaseGateway.cpp.i
+src/trader/RestClient.i: src/trader/RestClient.cpp.i
 
-.PHONY : src/trader/BaseGateway.i
+.PHONY : src/trader/RestClient.i
 
 # target to preprocess a source file
-src/trader/BaseGateway.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.i
-.PHONY : src/trader/BaseGateway.cpp.i
+src/trader/RestClient.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.i
+.PHONY : src/trader/RestClient.cpp.i
 
-src/trader/BaseGateway.s: src/trader/BaseGateway.cpp.s
+src/trader/RestClient.s: src/trader/RestClient.cpp.s
 
-.PHONY : src/trader/BaseGateway.s
+.PHONY : src/trader/RestClient.s
 
 # target to generate assembly for a file
-src/trader/BaseGateway.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.s
-.PHONY : src/trader/BaseGateway.cpp.s
+src/trader/RestClient.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.s
+.PHONY : src/trader/RestClient.cpp.s
+
+src/trader/http/connection.o: src/trader/http/connection.cpp.o
+
+.PHONY : src/trader/http/connection.o
+
+# target to build an object file
+src/trader/http/connection.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.o
+.PHONY : src/trader/http/connection.cpp.o
+
+src/trader/http/connection.i: src/trader/http/connection.cpp.i
+
+.PHONY : src/trader/http/connection.i
+
+# target to preprocess a source file
+src/trader/http/connection.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.i
+.PHONY : src/trader/http/connection.cpp.i
+
+src/trader/http/connection.s: src/trader/http/connection.cpp.s
+
+.PHONY : src/trader/http/connection.s
+
+# target to generate assembly for a file
+src/trader/http/connection.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.s
+.PHONY : src/trader/http/connection.cpp.s
 
 # Help Target
 help:
@@ -189,9 +216,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/trader/BaseGateway.o"
-	@echo "... src/trader/BaseGateway.i"
-	@echo "... src/trader/BaseGateway.s"
+	@echo "... src/trader/RestClient.o"
+	@echo "... src/trader/RestClient.i"
+	@echo "... src/trader/RestClient.s"
+	@echo "... src/trader/http/connection.o"
+	@echo "... src/trader/http/connection.i"
+	@echo "... src/trader/http/connection.s"
 .PHONY : help
 
 

@@ -70,16 +70,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/simon/git/vncpp/include/http/connection.h">
-			<Option target="main"/>
-		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/main.cpp">
 			<Option target="main"/>
 		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/src/trader/BaseGateway.cpp">
+		<Unit filename="/Users/simon/git/vncpp/src/trader/RestClient.cpp">
 			<Option target="main"/>
 		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/src/trader/http/http.h">
+		<Unit filename="/Users/simon/git/vncpp/src/trader/http/connection.cpp">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/CMakeLists.txt">

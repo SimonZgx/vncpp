@@ -14,6 +14,13 @@ namespace restclient {
     typedef std::map<std::string, std::string> Header;
 
     typedef struct {
+        void* memory;
+        size_t size;
+    }MemoryStruct;
+
+    size_t SimpleCallBackFunction(char *, size_t, size_t, void *);
+
+    typedef struct {
         int code;
         std::string body;
         Header header;
