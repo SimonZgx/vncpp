@@ -5,9 +5,9 @@
 #include <iostream>
 #include "http/connection.h"
 #include "RestClient.h"
-
+#include "json/json.hpp"
 using namespace std;
-
+using json = nlohmann::json;
 size_t OnQuerySymbol(char *contents, size_t size, size_t n_mem, void *user_type) {
 
 }
@@ -18,7 +18,10 @@ int main() {
 
     std::string baseUrl = std::string(url, std::strlen(url));
     Http::Connection *conn = new Http::Connection(baseUrl);
-    restclient::MemoryStruct res = conn->performCurlRequest("/v2/public/symbols");
+    restclient::MemoryStruct res = conn->performCurlRequest("/v2/public/symbols", restclient::SimpleCallBackFunction);
     cout << (char *) res.memory << endl;
+
+    auto result = json::parse((char *) res.memory);
+    cout<<result.dump(4)<<endl;
     return 0;
 }

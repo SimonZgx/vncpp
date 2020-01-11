@@ -10,9 +10,9 @@ Http::Connection::Connection(const std::string& baseUrl){
     curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
-void
+restclient::MemoryStruct
 Http::Connection::performCurlRequest(const std::string& uri, size_t callBack(char *, size_t , size_t, void *)) {
-    restclient::Response ret = {};
+    restclient::MemoryStruct ret = {};
     std::string url = std::string(this->baseUrl + uri);
     std::string headerString;
     CURLcode res = CURLE_OK;
@@ -30,4 +30,5 @@ Http::Connection::performCurlRequest(const std::string& uri, size_t callBack(cha
     // free header list
     // reset curl handle
     curl_easy_reset(this->curl);
+    return ret;
 }
