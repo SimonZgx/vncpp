@@ -11,20 +11,32 @@
 
 namespace restclient {
 
-    typedef std::map<std::string, std::string> Header;
+    using Header = std::map<std::string, std::string>;
 
     typedef struct {
-        void* memory;
+        void *memory;
         size_t size;
-    }MemoryStruct;
+    } MemoryStruct;
 
-    size_t SimpleCallBackFunction(char *, size_t, size_t, void *);
+    static inline std::string &ltrim(std::string &);
+
+    static inline std::string &rtrim(std::string &);
+
+    static inline std::string &trim(std::string &);
+
+    size_t SimpleCallBackFunction(void *, size_t, size_t, void *);
+
+    size_t BodyCallBackFunction(void *, size_t, size_t, void *);
+
+    size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
 
     typedef struct {
         int code;
         std::string body;
         Header header;
     } Response;
+
+    using CallbackFunc = void(*)(CURLcode, const Response*);
 
     class RestClient {
         Response get(const std::string &url);

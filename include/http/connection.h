@@ -61,9 +61,7 @@ namespace Http{
         explicit Connection(const std::string& baseUrl);
         ~Connection();
 
-        restclient::MemoryStruct performCurlRequest(const std::string& uri, size_t callBack(char *, size_t , size_t, void *));
-
-
+        void performCurlRequest(const std::string &uri, restclient::CallbackFunc);
     };
 }
 

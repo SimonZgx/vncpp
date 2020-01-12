@@ -10,25 +10,24 @@ Http::Connection::Connection(const std::string& baseUrl){
     curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
-restclient::MemoryStruct
-Http::Connection::performCurlRequest(const std::string& uri, size_t callBack(char *, size_t , size_t, void *)) {
-    restclient::MemoryStruct ret = {};
+void
+Http::Connection::performCurlRequest(const std::string& uri, restclient::CallbackFunc callback) {
+    restclient::Response ret = {};
     std::string url = std::string(this->baseUrl + uri);
     std::string headerString;
-    CURLcode res = CURLE_OK;
+    CURLcode resCode = CURLE_OK;
 
     /** set query URL */
     curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
     /** set callback function */
     curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION,
-                     callBack);
-    /** set data object to pass to callback function */
+                     restclient::BodyCallBackFunction);
     curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &ret);
-
-
-    res = curl_easy_perform(this->curl);
+    curl_easy_setopt(this->curl, CURLOPT_HEADERFUNCTION, restclient::HeaderCallBackFunction);
+    curl_easy_setopt(this->curl, CURLOPT_HEADERDATA, &ret);
+    resCode = curl_easy_perform(this->curl);
     // free header list
     // reset curl handle
     curl_easy_reset(this->curl);
-    return ret;
+    callback(resCode, &ret);
 }
