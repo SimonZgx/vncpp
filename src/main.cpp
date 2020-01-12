@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <future>
+#include <thread>
 #include "http/connection.h"
 #include "RestClient.h"
 #include "json/json.hpp"
@@ -23,13 +25,14 @@ void OnQuerySymbol(CURLcode retCode, const restclient::Response *res) {
 }
 
 int main() {
-
     restclient::CallbackFunc onQuerySymbol = &OnQuerySymbol;
 
     char *url = (char *) calloc(30, sizeof(char));
     strcpy(url, "https://api.bybit.com");
     std::string baseUrl = std::string(url, std::strlen(url));
     Http::Connection *conn = new Http::Connection(baseUrl);
-    conn->performCurlRequest("/v2/public/symbols", OnQuerySymbol);
+    std::thread t = std::thread(&Http::Connection::performCurlRequest,conn,"/v2/public/symbols",OnQuerySymbol);
+    t.detach();
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     return 0;
 }
