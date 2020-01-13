@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(main)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++14)
 
 aux_source_directory(. DIR_SRCS)
 

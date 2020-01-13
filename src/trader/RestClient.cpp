@@ -5,19 +5,40 @@
 #include "RestClient.h"
 #include <stdio.h>
 
-restclient::Response restclient::RestClient::get(const std::string &url) {
-    return Response();
+void restclient::RestClient::get(const std::string &url, CallbackFunc callback) {
+#if __cplusplus >= 201402L
+    auto conn = std::make_unique<Http::Connection>(this->baseUrl);
+    return conn->get(url, callback);
+#else
+    Http::Connection *conn = new Http::Connection(this->baseUrl);
+    conn->get(url, callback);
+    delete conn;
+#endif
 }
+
+
+void restclient::RestClient::post(const std::string &url, const std::string &content_type, const std::string &data,
+                                  CallbackFunc callback) {
+#if __cplusplus >= 201402L
+    auto conn = std::make_unique<Http::Connection>(this->baseUrl);
+    return conn->post(url, content_type, data, callback);
+#else
+    Http::Connection *conn = new Http::Connection(this->baseUrl);
+    conn->post(url, content_type, data, callback);
+    delete conn;
+#endif
+}
+
 
 std::string &restclient::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                                    [](int c) {return !std::isspace(c);}));
+                                    [](int c) { return !std::isspace(c); }));
     return s;
 }
 
 std::string &restclient::rtrim(std::string &s) {
     s.erase(std::find_if(s.rbegin(), s.rend(),
-                         [](int c) {return !std::isspace(c);}).base(), s.end());
+                         [](int c) { return !std::isspace(c); }).base(), s.end());
     return s;
 }
 
@@ -57,17 +78,17 @@ size_t restclient::HeaderCallBackFunction(void *contents, size_t size, size_t nm
     size_t firstOf = header.find_first_of(":");
     if (std::string::npos == firstOf) {
         trim(header);
-        if(0==header.length()){
-            return size*nmemb;
+        if (0 == header.length()) {
+            return size * nmemb;
         }
         r->header[header] = "present";
-    }else{
+    } else {
         std::string key = header.substr(0, firstOf);
         trim(key);
-        std::string value = header.substr(firstOf+1);
+        std::string value = header.substr(firstOf + 1);
         trim(value);
         r->header[key] = value;
     }
-    return size*nmemb;
+    return size * nmemb;
 }
 

@@ -5,9 +5,10 @@
 #ifndef MAIN_RESTCLIENT_H
 #define MAIN_RESTCLIENT_H
 
-#include "curl/curl.h"
 #include <map>
 #include <string>
+#include "curl/curl.h"
+#include "http/connection.h"
 
 namespace restclient {
 
@@ -36,18 +37,19 @@ namespace restclient {
         Header header;
     } Response;
 
-    using CallbackFunc = void(*)(CURLcode, const Response*);
+    using CallbackFunc = void (*)(CURLcode, const Response *);
 
     class RestClient {
-        Response get(const std::string &url);
+    private:
+        const char *baseUrl;
+    public:
+        void get(const std::string &url, CallbackFunc);
 
-        Response post(const std::string &url,
-                      const std::string &content_type,
-                      const std::string &data);
+        void post(const std::string &url,
+                  const std::string &content_type,
+                  const std::string &data,
+                  CallbackFunc);
 
-        Response put(const std::string &url,
-                     const std::string &content_type,
-                     const std::string &data);
     };
 
 

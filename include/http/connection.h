@@ -7,10 +7,10 @@
 
 #include <curl/curl.h>
 #include <string>
-#include "RestClient.h"
 #include <iostream>
+#include "RestClient.h"
 
-namespace Http{
+namespace Http {
 
     typedef struct {
         double totalTime;
@@ -45,10 +45,10 @@ namespace Http{
         Request lastRequest;
     } Config;
 
-    class Connection{
+    class Connection {
     private:
 
-        CURL* curl;
+        CURL *curl;
         std::string baseUrl;
         restclient::Header headerFields;
         int timeout;
@@ -58,8 +58,16 @@ namespace Http{
     public:
         Request request;
 
-        explicit Connection(const std::string& baseUrl);
+        explicit Connection(const std::string &baseUrl);
+
         ~Connection();
+
+        void get(const std::string &url, restclient::CallbackFunc);
+
+        void post(const std::string &url,
+                  const std::string &content_type,
+                  const std::string &data,
+                  restclient::CallbackFunc);
 
         void performCurlRequest(const std::string &uri, restclient::CallbackFunc);
     };
