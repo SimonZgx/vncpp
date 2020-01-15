@@ -8,6 +8,8 @@ aux_source_directory(. DIR_SRCS)
 
 include_directories(include)
 
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
 link_libraries(curl)
 
 find_package(CURL REQUIRED)

@@ -12,8 +12,6 @@
 
 namespace restclient {
 
-    using Header = std::map<std::string, std::string>;
-
     typedef struct {
         void *memory;
         size_t size;
@@ -25,30 +23,17 @@ namespace restclient {
 
     static inline std::string &trim(std::string &);
 
-    size_t SimpleCallBackFunction(void *, size_t, size_t, void *);
-
-    size_t BodyCallBackFunction(void *, size_t, size_t, void *);
-
-    size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
-
-    typedef struct {
-        int code;
-        std::string body;
-        Header header;
-    } Response;
-
-    using CallbackFunc = void (*)(CURLcode, const Response *);
 
     class RestClient {
     private:
         const char *baseUrl;
     public:
-        void get(const std::string &url, CallbackFunc);
+        void get(const std::string &url, Http::CallbackFunc);
 
         void post(const std::string &url,
                   const std::string &content_type,
                   const std::string &data,
-                  CallbackFunc);
+                  Http::CallbackFunc);
 
     };
 

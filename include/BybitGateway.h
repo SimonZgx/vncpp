@@ -5,19 +5,17 @@
 #ifndef MAIN_BYBITGATEWAY_H
 #define MAIN_BYBITGATEWAY_H
 
-
-#include "BaseGateway.h"
-#include "RestClient.h"
 #include <string>
 #include <map>
+#include <thread>
+#include "RestClient.h"
 
 using namespace std;
 
-typedef std::map<std::string, std::string> Setting;
 namespace bybit {
     const std::string Side[]{
             "Buy",
-            "Sell"
+            "Sell",
     };
 
     const std::string OrderType[]{
@@ -32,22 +30,24 @@ namespace bybit {
             "FillOrKill",
     };
 
-    class BybitGateway : BaseGateway {
+    class BybitGateway  {
     private:
         CURL *curl;
-        const char *key;
-        const char *secret;
+        std::string key;
+        std::string secret;
         std::string baseUrl;
         std::unique_ptr<restclient::RestClient> restClient;
-
+        static void OnQuerySymbol (CURLcode, const Http::Response *){
+            std::cout<<"on query symbol"<<std::endl;
+        }
     public:
-        BybitGateway(const char *, Setting);
+        BybitGateway(const char *, std::string&, std::string&);
 
-        static shared_ptr<BybitGateway> GetInstance(const char *, Setting);
+        static shared_ptr<BybitGateway> GetInstance(const char *, std::string&, std::string&);
 
         static shared_ptr<BybitGateway> instance;
 
-        void QuerySymbols(restclient::CallbackFunc);
+        void QuerySymbols(Http::CallbackFunc=OnQuerySymbol);
     };
 
     class RestClient : restclient::RestClient {

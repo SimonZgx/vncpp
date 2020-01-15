@@ -8,9 +8,12 @@
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
-#include "RestClient.h"
+#include <map>
+
 
 namespace Http {
+
+    using Header = std::map<std::string, std::string>;
 
     typedef struct {
         double totalTime;
@@ -24,37 +27,36 @@ namespace Http {
     } Request;
 
     typedef struct {
-        std::string baseUrl;
-        restclient::Header headers;
-        int timeout;
-        bool followRedirects;
-        int maxRedirects;
-        bool noSignal;
-        struct {
-            std::string username;
-            std::string password;
-        } basicAuth;
+        int code;
+        std::string body;
+        Header header;
+    } Response;
 
-        std::string certPath;
-        std::string certType;
-        std::string keyPath;
-        std::string keyPassword;
-        std::string customUserAgent;
-        std::string uriProxy;
-        std::string unixSocketPath;
-        Request lastRequest;
-    } Config;
+    using CallbackFunc = void (*)(CURLcode, const Response *);
+
+    inline std::string &ltrim(std::string &);
+
+    inline std::string &rtrim(std::string &);
+
+    inline std::string &trim(std::string &);
+
+    size_t SimpleCallBackFunction(void *, size_t, size_t, void *);
+
+    size_t BodyCallBackFunction(void *, size_t, size_t, void *);
+
+    size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
 
     class Connection {
     private:
 
         CURL *curl;
         std::string baseUrl;
-        restclient::Header headerFields;
+        Header headerFields;
         int timeout;
         bool followRedirects;
         int maxRedirects;
         bool noSignal;
+
     public:
         Request request;
 
@@ -62,14 +64,14 @@ namespace Http {
 
         ~Connection();
 
-        void get(const std::string &url, restclient::CallbackFunc);
+        void get(const std::string &url, CallbackFunc);
 
         void post(const std::string &url,
                   const std::string &content_type,
                   const std::string &data,
-                  restclient::CallbackFunc);
+                  CallbackFunc);
 
-        void performCurlRequest(const std::string &uri, restclient::CallbackFunc);
+        void performCurlRequest(const std::string &uri, CallbackFunc);
     };
 }
 

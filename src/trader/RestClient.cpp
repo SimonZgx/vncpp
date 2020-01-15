@@ -5,7 +5,7 @@
 #include "RestClient.h"
 #include <stdio.h>
 
-void restclient::RestClient::get(const std::string &url, CallbackFunc callback) {
+void restclient::RestClient::get(const std::string &url, Http::CallbackFunc callback) {
 #if __cplusplus >= 201402L
     auto conn = std::make_unique<Http::Connection>(this->baseUrl);
     return conn->get(url, callback);
@@ -18,7 +18,7 @@ void restclient::RestClient::get(const std::string &url, CallbackFunc callback) 
 
 
 void restclient::RestClient::post(const std::string &url, const std::string &content_type, const std::string &data,
-                                  CallbackFunc callback) {
+                                  Http::CallbackFunc callback) {
 #if __cplusplus >= 201402L
     auto conn = std::make_unique<Http::Connection>(this->baseUrl);
     return conn->post(url, content_type, data, callback);
@@ -46,7 +46,7 @@ std::string &restclient::trim(std::string &s) {
     return rtrim(ltrim(s));
 }
 
-size_t restclient::SimpleCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
+size_t Http::SimpleCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
     size_t n = size * nmemb;
     restclient::MemoryStruct *memoryStruct = (restclient::MemoryStruct *) user_type;
     void *ptr = nullptr;
@@ -63,32 +63,4 @@ size_t restclient::SimpleCallBackFunction(void *contents, size_t size, size_t nm
     ((char *) memoryStruct->memory)[memoryStruct->size] = '\0';
     return n;
 };
-
-size_t restclient::BodyCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
-    restclient::Response *r = nullptr;
-    r = reinterpret_cast<restclient::Response *>(user_type);
-    r->body.append(reinterpret_cast<char *>(contents), nmemb * size);
-    return size * nmemb;
-}
-
-size_t restclient::HeaderCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
-    restclient::Response *r = nullptr;
-    r = reinterpret_cast<restclient::Response *>(user_type);
-    std::string header(reinterpret_cast<char *>(contents), size * nmemb);
-    size_t firstOf = header.find_first_of(":");
-    if (std::string::npos == firstOf) {
-        trim(header);
-        if (0 == header.length()) {
-            return size * nmemb;
-        }
-        r->header[header] = "present";
-    } else {
-        std::string key = header.substr(0, firstOf);
-        trim(key);
-        std::string value = header.substr(firstOf + 1);
-        trim(value);
-        r->header[key] = value;
-    }
-    return size * nmemb;
-}
 
