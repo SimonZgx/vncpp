@@ -26,16 +26,15 @@ using json = nlohmann::json;
 int main() {
 //    restclient::CallbackFunc onQuerySymbol = &OnQuerySymbol;
 //
-    char *url = (char *) calloc(30, sizeof(char));
-    strcpy(url, "https://api.bybit.com");
 //    std::string baseUrl = std::string(url, std::strlen(url));
 //    Http::Connection *conn = new Http::Connection(baseUrl);
 //    std::thread t = std::thread(&Http::Connection::performCurlRequest,conn,"/v2/public/symbols",OnQuerySymbol);
 //    t.detach();
-    std::string key ="key";
+    std::string baseUrl = "https://api.bybit.com";
+    std::string key = "key";
     std::string secret = "secret";
-    auto *client = new bybit::BybitGateway((const char*)url, key, secret);
-//    client->QuerySymbols();
-//    std::this_thread::sleep_for(std::chrono::seconds(2));
+    auto *client = new bybit::BybitGateway(baseUrl, key, secret);
+    client->QuerySymbols();
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     return 0;
 }

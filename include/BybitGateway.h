@@ -41,9 +41,9 @@ namespace bybit {
             std::cout<<"on query symbol"<<std::endl;
         }
     public:
-        BybitGateway(const char *, std::string&, std::string&);
+        BybitGateway(std::string&, std::string&, std::string&);
 
-        static shared_ptr<BybitGateway> GetInstance(const char *, std::string&, std::string&);
+        static shared_ptr<BybitGateway> GetInstance(std::string&, std::string&, std::string&);
 
         static shared_ptr<BybitGateway> instance;
 

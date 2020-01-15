@@ -26,7 +26,7 @@ namespace restclient {
 
     class RestClient {
     private:
-        const char *baseUrl;
+        std::string baseUrl;
     public:
         void get(const std::string &url, Http::CallbackFunc);
 

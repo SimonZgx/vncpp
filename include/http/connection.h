@@ -60,7 +60,7 @@ namespace Http {
     public:
         Request request;
 
-        explicit Connection(const std::string &baseUrl);
+        explicit Connection(std::string &baseUrl);
 
         ~Connection();
 

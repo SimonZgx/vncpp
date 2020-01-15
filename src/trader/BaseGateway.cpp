@@ -12,3 +12,7 @@ using namespace std;
 BaseGateway::BaseGateway(){
 
 }
+
+BaseGateway::~BaseGateway() {
+
+}

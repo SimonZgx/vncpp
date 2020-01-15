@@ -3,7 +3,7 @@
 //
 #include "http/connection.h"
 
-Http::Connection::Connection(const std::string &baseUrl) {
+Http::Connection::Connection(std::string &baseUrl) {
     this->baseUrl = baseUrl;
     std::cout << this->baseUrl << std::endl;
     this->curl = curl_easy_init();

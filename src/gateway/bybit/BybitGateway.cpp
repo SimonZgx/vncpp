@@ -8,16 +8,14 @@
 
 shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
 
-bybit::BybitGateway::BybitGateway(const char *baseUrl, std::string &key, std::string &secret) {
+bybit::BybitGateway::BybitGateway(std::string &baseUrl, std::string &key, std::string &secret) {
     this->baseUrl = baseUrl;
     this->key = key;
     this->secret = secret;
-    curl_global_init(CURL_GLOBAL_DEFAULT);
     this->restClient = std::make_unique<restclient::RestClient>();
-    curl = curl_easy_init();
 };
 
-shared_ptr<bybit::BybitGateway> bybit::BybitGateway::GetInstance(const char *basePath, std::string&key, std::string&secret) {
+shared_ptr<bybit::BybitGateway> bybit::BybitGateway::GetInstance(std::string& basePath, std::string&key, std::string&secret) {
     if (instance == nullptr) {
         return shared_ptr<BybitGateway>(new BybitGateway(basePath, key, secret));
     }
@@ -26,6 +24,8 @@ shared_ptr<bybit::BybitGateway> bybit::BybitGateway::GetInstance(const char *bas
 
 void bybit::BybitGateway::QuerySymbols(Http::CallbackFunc callback) {
     std::string url = this->baseUrl.append("/v2/public/symbols");
-    std::thread t = std::thread(&restclient::RestClient::get, (*this->restClient), "/v2/public/symbols", callback);
+    std::thread t = std::thread(&restclient::RestClient::get, (*this->restClient), url, callback);
+//    this->restClient->get(url, callback);
+
 }
 
