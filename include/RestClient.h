@@ -26,8 +26,14 @@ namespace restclient {
 
     class RestClient {
     private:
+        std::unique_ptr<Http::Connection> conn;
         std::string baseUrl;
     public:
+
+        RestClient(std::string &baseUrl){
+            this->conn = std::make_unique<Http::Connection>(baseUrl);
+        }
+
         void get(const std::string &url, Http::CallbackFunc);
 
         void post(const std::string &url,

@@ -58,7 +58,7 @@ void Http::Connection::performCurlRequest(const std::string &uri, Http::Callback
     Http::Response ret = {};
     std::string url = std::string(this->baseUrl + uri);
     std::string headerString;
-    CURLcode resCode = CURLE_OK;
+    CURLcode retCode = CURLE_OK;
 
     /** set query URL */
     curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
@@ -68,11 +68,11 @@ void Http::Connection::performCurlRequest(const std::string &uri, Http::Callback
     curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &ret);
     curl_easy_setopt(this->curl, CURLOPT_HEADERFUNCTION, Http::HeaderCallBackFunction);
     curl_easy_setopt(this->curl, CURLOPT_HEADERDATA, &ret);
-    resCode = curl_easy_perform(this->curl);
+    retCode = curl_easy_perform(this->curl);
     // free header list
     // reset curl handle
     curl_easy_reset(this->curl);
-    callback(resCode, &ret);
+    callback(retCode, &ret);
 }
 
 void Http::Connection::get(const std::string &url,CallbackFunc callback) {

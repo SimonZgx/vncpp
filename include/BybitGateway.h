@@ -8,9 +8,9 @@
 #include <string>
 #include <map>
 #include <thread>
+#include <sys/time.h>
 #include "RestClient.h"
 
-using namespace std;
 
 namespace bybit {
     const std::string Side[]{
@@ -30,24 +30,31 @@ namespace bybit {
             "FillOrKill",
     };
 
+    int getCurrentTime(){
+        timeval time;
+        gettimeofday(&time, 0);
+        return time.tv_sec;
+    }
+
+    void OnQuerySymbol (CURLcode, const Http::Response *);
+    void OnSetLeverage(CURLcode, const Http::Response *);
+
     class BybitGateway  {
     private:
         CURL *curl;
         std::string key;
         std::string secret;
         std::string baseUrl;
-        std::unique_ptr<restclient::RestClient> restClient;
-        static void OnQuerySymbol (CURLcode, const Http::Response *){
-            std::cout<<"on query symbol"<<std::endl;
-        }
+        restclient::RestClient restClient;
     public:
         BybitGateway(std::string&, std::string&, std::string&);
 
-        static shared_ptr<BybitGateway> GetInstance(std::string&, std::string&, std::string&);
+        static std::shared_ptr<BybitGateway> GetInstance(std::string&, std::string&, std::string&);
 
-        static shared_ptr<BybitGateway> instance;
+        static std::shared_ptr<BybitGateway> instance;
 
         void QuerySymbols(Http::CallbackFunc=OnQuerySymbol);
+        void SetLeverage(int, Http::CallbackFunc=OnSetLeverage);
     };
 
     class RestClient : restclient::RestClient {
