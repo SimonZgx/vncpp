@@ -8,14 +8,15 @@
 
 std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
 
-bybit::BybitGateway::BybitGateway(std::string &baseUrl, std::string &key, std::string &secret){
+bybit::BybitGateway::BybitGateway(std::string &baseUrl, std::string &key, std::string &secret) :
+        restClient(restclient::RestClient(baseUrl)) {
     this->baseUrl = baseUrl;
     this->key = key;
     this->secret = secret;
-    this->restClient =  restclient::RestClient();
 };
 
-std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::GetInstance(std::string& basePath, std::string&key, std::string&secret) {
+std::shared_ptr<bybit::BybitGateway>
+bybit::BybitGateway::GetInstance(std::string &basePath, std::string &key, std::string &secret) {
     if (instance == nullptr) {
         return std::shared_ptr<BybitGateway>(new BybitGateway(basePath, key, secret));
     }
@@ -23,32 +24,31 @@ std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::GetInstance(std::strin
 }
 
 
-
-void bybit::BybitGateway::QuerySymbols(Http::CallbackFunc callback) {
+void bybit::BybitGateway::QuerySymbols(http::CallbackFunc callback) {
     std::string url = this->baseUrl.append("/v2/public/symbols");
-    std::thread th(&restclient::RestClient::get, std::ref(this->restClient),url, callback);
+    std::thread th(&restclient::RestClient::get, std::ref(this->restClient), url, callback);
     th.detach();
 }
 
-void bybit::BybitGateway::SetLeverage(int, Http::CallbackFunc) {
+void bybit::BybitGateway::SetLeverage(int, http::CallbackFunc) {
 
 }
 
 
-void bybit::OnQuerySymbol(CURLcode httpRetCode, const Http::Response *res) {
-    std::cout<<"On Query Symbol"<<std::endl;
-    if (CURLE_OK != httpRetCode){
-        std::cout<<"Query symbol request error. Error code : "<<httpRetCode<<std::endl;
+void bybit::OnQuerySymbol(CURLcode httpRetCode, const http::Response *res) {
+    std::cout << "On Query Symbol" << std::endl;
+    if (CURLE_OK != httpRetCode) {
+        std::cout << "Query symbol request error. Error code : " << httpRetCode << std::endl;
         return;
     }
-    std::cout<<res->body<<std::endl;
+    std::cout << res->body << std::endl;
 }
 
-void bybit::OnSetLeverage(CURLcode httpRetCode, const Http::Response *res) {
-    std::cout<<"On Set Leverage"<<std::endl;
-    if (CURLE_OK != httpRetCode){
-        std::cout<<"On Set Leverage request error. Error code : "<<httpRetCode<<std::endl;
+void bybit::OnSetLeverage(CURLcode httpRetCode, const http::Response *res) {
+    std::cout << "On Set Leverage" << std::endl;
+    if (CURLE_OK != httpRetCode) {
+        std::cout << "On Set Leverage request error. Error code : " << httpRetCode << std::endl;
         return;
     }
-    std::cout<<res->body<<std::endl;
+    std::cout << res->body << std::endl;
 }

@@ -231,6 +231,33 @@ src/trader/http/connection.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.s
 .PHONY : src/trader/http/connection.cpp.s
 
+test/test_threadpool/main.o: test/test_threadpool/main.cpp.o
+
+.PHONY : test/test_threadpool/main.o
+
+# target to build an object file
+test/test_threadpool/main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.o
+.PHONY : test/test_threadpool/main.cpp.o
+
+test/test_threadpool/main.i: test/test_threadpool/main.cpp.i
+
+.PHONY : test/test_threadpool/main.i
+
+# target to preprocess a source file
+test/test_threadpool/main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.i
+.PHONY : test/test_threadpool/main.cpp.i
+
+test/test_threadpool/main.s: test/test_threadpool/main.cpp.s
+
+.PHONY : test/test_threadpool/main.s
+
+# target to generate assembly for a file
+test/test_threadpool/main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.s
+.PHONY : test/test_threadpool/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +279,9 @@ help:
 	@echo "... src/trader/http/connection.o"
 	@echo "... src/trader/http/connection.i"
 	@echo "... src/trader/http/connection.s"
+	@echo "... test/test_threadpool/main.o"
+	@echo "... test/test_threadpool/main.i"
+	@echo "... test/test_threadpool/main.s"
 .PHONY : help
 
 

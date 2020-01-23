@@ -11,20 +11,20 @@
 #include <map>
 
 
-namespace Http {
+namespace http {
 
     using Header = std::map<std::string, std::string>;
-
-    typedef struct {
-        double totalTime;
-        double nameLookupTime;
-        double connectTime;
-        double appConnectTime;
-        double preTransferTime;
-        double startTransferTime;
-        double redirectTime;
-        int redirectCount;
-    } Request;
+    using Param = std::map<std::string, std::string>;
+//    typedef struct {
+//        double totalTime;
+//        double nameLookupTime;
+//        double connectTime;
+//        double appConnectTime;
+//        double preTransferTime;
+//        double startTransferTime;
+//        double redirectTime;
+//        int redirectCount;
+//    } Request;
 
     typedef struct {
         int code;
@@ -58,7 +58,6 @@ namespace Http {
         bool noSignal;
 
     public:
-        Request request;
 
         explicit Connection(std::string &baseUrl);
 

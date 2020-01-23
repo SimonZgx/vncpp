@@ -5,10 +5,21 @@
 #include "RestClient.h"
 #include <stdio.h>
 
-void restclient::RestClient::get(const std::string &url, Http::CallbackFunc callback) {
+std::string paramToString(const http::Param& p){
+    if(p.empty()) return "";
+    auto pb= p.cbegin(), pe= p.cend();
+    std::string data= pb-> first+ "="+ pb-> second;
+    ++ pb;
+    if(pb== pe) return data;
+    for(; pb!= pe; ++ pb)
+        data+= "&"+ pb-> first+ "="+ pb-> second;
+    return data;
+}
+
+void restclient::RestClient::get(Request& req, http::CallbackFunc callback) {
 #if __cplusplus >= 201402L
-    auto conn = std::make_unique<Http::Connection>(this->baseUrl);
-    return conn->get(url, callback);
+    auto conn = std::make_unique<http::Connection>(this->baseUrl);
+    return conn->get(req.path, callback);
 #else
     Http::Connection *conn = new Http::Connection(this->baseUrl);
     conn->get(url, callback);
@@ -17,11 +28,11 @@ void restclient::RestClient::get(const std::string &url, Http::CallbackFunc call
 }
 
 
-void restclient::RestClient::post(const std::string &url, const std::string &content_type, const std::string &data,
-                                  Http::CallbackFunc callback) {
+void restclient::RestClient::post(Request& req,
+                                  http::CallbackFunc callback) {
 #if __cplusplus >= 201402L
-    auto conn = std::make_unique<Http::Connection>(this->baseUrl);
-    return conn->post(url, content_type, data, callback);
+    auto conn = std::make_unique<http::Connection>(this->baseUrl);
+    return conn->post(req.path, req.contentType, paramToString(req.data).c_str(), callback);
 #else
     Http::Connection *conn = new Http::Connection(this->baseUrl);
     conn->post(url, content_type, data, callback);
@@ -46,7 +57,7 @@ std::string &restclient::trim(std::string &s) {
     return rtrim(ltrim(s));
 }
 
-size_t Http::SimpleCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
+size_t http::SimpleCallBackFunction(void *contents, size_t size, size_t nmemb, void *user_type) {
     size_t n = size * nmemb;
     restclient::MemoryStruct *memoryStruct = (restclient::MemoryStruct *) user_type;
     void *ptr = nullptr;

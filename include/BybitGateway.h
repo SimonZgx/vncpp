@@ -53,8 +53,8 @@ namespace bybit {
 
         static std::shared_ptr<BybitGateway> instance;
 
-        void QuerySymbols(Http::CallbackFunc=OnQuerySymbol);
-        void SetLeverage(int, Http::CallbackFunc=OnSetLeverage);
+        void QuerySymbols(http::CallbackFunc=OnQuerySymbol);
+        void SetLeverage(int, http::CallbackFunc=OnSetLeverage);
     };
 
     class RestClient : restclient::RestClient {

@@ -16,4 +16,4 @@ target_link_libraries(CURL::libcurl)
 
 #aux_source_directory(src/gateway/bybit/ DIR_SRCS)
 #add_executable(main ${DIR_SRCS})
-add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/RestClient.cpp src/gateway/bybit/BybitGateway.cpp )
+add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/RestClient.cpp src/gateway/bybit/BybitGateway.cpp include/http/request.h test/test_threadpool/ThreadPool.h test/test_threadpool/main.cpp)
