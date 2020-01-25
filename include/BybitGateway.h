@@ -8,7 +8,7 @@
 #include <string>
 #include <map>
 #include <thread>
-#include <sys/time.h>
+#include <ctime>
 #include "RestClient.h"
 
 
@@ -36,8 +36,8 @@ namespace bybit {
         return time.tv_sec;
     }
 
-    void OnQuerySymbol (CURLcode, const Http::Response *);
-    void OnSetLeverage(CURLcode, const Http::Response *);
+    void OnQuerySymbol (CURLcode, const http::Response *);
+    void OnSetLeverage(CURLcode, const http::Response *);
 
     class BybitGateway  {
     private:
@@ -57,7 +57,7 @@ namespace bybit {
         void SetLeverage(int, http::CallbackFunc=OnSetLeverage);
     };
 
-    class RestClient : restclient::RestClient {
+    class BybitRestClient : restclient::RestClient {
 
     };
 }

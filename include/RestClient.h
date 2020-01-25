@@ -7,12 +7,10 @@
 
 #include <map>
 #include <string>
+#include <cstdio>
 #include <future>
-#include "curl/curl.h"
 #include "http/connection.h"
-#include "http/request.h"
-
-using http::Request;
+#include "thread_pool/threadpool.h"
 
 namespace restclient {
 
@@ -20,6 +18,8 @@ namespace restclient {
         void *memory;
         size_t size;
     } MemoryStruct;
+
+    std::string paramToString(const http::Param &p);
 
     static inline std::string &ltrim(std::string &);
 
@@ -30,26 +30,18 @@ namespace restclient {
 
     class RestClient {
     private:
-        std::unique_ptr<http::Connection> conn;
+        std::shared_ptr<http::Connection> conn;
         std::string baseUrl;
+        std::shared_ptr<http::ThreadPool> worker;
     public:
 
-        RestClient(std::string &baseUrl) {
-            this->conn = std::make_unique<http::Connection>(baseUrl);
+        explicit RestClient(std::string &baseUrl) {
+            this->conn = std::make_shared<http::Connection>(baseUrl);
+            this->worker = std::make_shared<http::ThreadPool>(std::thread::hardware_concurrency());
         }
 
-        void get(Request &, http::CallbackFunc);
+        void addRequest(const http::Request &req);
 
-        void post(Request &,
-                  http::CallbackFunc);
-
-    };
-
-    class ThreadPool {
-        ThreadPool(size_t);
-
-        template<class F, class...Args>
-        auto enqueue(F &&f, Args &&...args) -> std::future<typename std::result_of<F(Args...)>::type>;
     };
 
 

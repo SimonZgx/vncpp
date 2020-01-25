@@ -46,6 +46,17 @@ namespace http {
 
     size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
 
+    class Request {
+    public:
+        const char *method;
+        const char *path;
+        const char *contentType;
+        const Param &data;
+        http::CallbackFunc callback;
+
+        Request(const char *method,const char *path, const char *content_type, const Param &param, http::CallbackFunc callback);
+    };
+
     class Connection {
     private:
 
@@ -63,14 +74,14 @@ namespace http {
 
         ~Connection();
 
-        void get(const std::string &url, CallbackFunc);
+        void get(const char *url, const char *contentType, CallbackFunc);
 
-        void post(const std::string &url,
-                  const std::string &content_type,
-                  const std::string &data,
+        void post(const char *url,
+                  const char *content_type,
+                  const char *data,
                   CallbackFunc);
 
-        void performCurlRequest(const std::string &uri, CallbackFunc);
+        void performCurlRequest(const char *uri, CallbackFunc);
     };
 }
 

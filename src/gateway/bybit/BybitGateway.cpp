@@ -3,7 +3,6 @@
 //
 
 #include "BybitGateway.h"
-
 #include <memory>
 
 std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
@@ -25,9 +24,9 @@ bybit::BybitGateway::GetInstance(std::string &basePath, std::string &key, std::s
 
 
 void bybit::BybitGateway::QuerySymbols(http::CallbackFunc callback) {
-    std::string url = this->baseUrl.append("/v2/public/symbols");
-    std::thread th(&restclient::RestClient::get, std::ref(this->restClient), url, callback);
-    th.detach();
+    http::Param p;
+    http::Request req((char*)"get", (char*)"/v2/public/symbols", (char*)"", p,callback);
+    this->restClient.addRequest(std::ref(req));
 }
 
 void bybit::BybitGateway::SetLeverage(int, http::CallbackFunc) {

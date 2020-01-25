@@ -231,32 +231,32 @@ src/trader/http/connection.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.s
 .PHONY : src/trader/http/connection.cpp.s
 
-test/test_threadpool/main.o: test/test_threadpool/main.cpp.o
+src/trader/thread_pool.o: src/trader/thread_pool.cpp.o
 
-.PHONY : test/test_threadpool/main.o
+.PHONY : src/trader/thread_pool.o
 
 # target to build an object file
-test/test_threadpool/main.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.o
-.PHONY : test/test_threadpool/main.cpp.o
+src/trader/thread_pool.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.o
+.PHONY : src/trader/thread_pool.cpp.o
 
-test/test_threadpool/main.i: test/test_threadpool/main.cpp.i
+src/trader/thread_pool.i: src/trader/thread_pool.cpp.i
 
-.PHONY : test/test_threadpool/main.i
+.PHONY : src/trader/thread_pool.i
 
 # target to preprocess a source file
-test/test_threadpool/main.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.i
-.PHONY : test/test_threadpool/main.cpp.i
+src/trader/thread_pool.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.i
+.PHONY : src/trader/thread_pool.cpp.i
 
-test/test_threadpool/main.s: test/test_threadpool/main.cpp.s
+src/trader/thread_pool.s: src/trader/thread_pool.cpp.s
 
-.PHONY : test/test_threadpool/main.s
+.PHONY : src/trader/thread_pool.s
 
 # target to generate assembly for a file
-test/test_threadpool/main.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/test/test_threadpool/main.cpp.s
-.PHONY : test/test_threadpool/main.cpp.s
+src/trader/thread_pool.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.s
+.PHONY : src/trader/thread_pool.cpp.s
 
 # Help Target
 help:
@@ -279,9 +279,9 @@ help:
 	@echo "... src/trader/http/connection.o"
 	@echo "... src/trader/http/connection.i"
 	@echo "... src/trader/http/connection.s"
-	@echo "... test/test_threadpool/main.o"
-	@echo "... test/test_threadpool/main.i"
-	@echo "... test/test_threadpool/main.s"
+	@echo "... src/trader/thread_pool.o"
+	@echo "... src/trader/thread_pool.i"
+	@echo "... src/trader/thread_pool.s"
 .PHONY : help
 
 

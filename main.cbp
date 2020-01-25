@@ -70,9 +70,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/simon/git/vncpp/include/http/request.h">
-			<Option target="main"/>
-		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/gateway/bybit/BybitGateway.cpp">
 			<Option target="main"/>
 		</Unit>
@@ -85,10 +82,7 @@
 		<Unit filename="/Users/simon/git/vncpp/src/trader/http/connection.cpp">
 			<Option target="main"/>
 		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/test/test_threadpool/ThreadPool.h">
-			<Option target="main"/>
-		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/test/test_threadpool/main.cpp">
+		<Unit filename="/Users/simon/git/vncpp/src/trader/thread_pool.cpp">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/CMakeLists.txt">

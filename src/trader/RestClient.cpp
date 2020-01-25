@@ -3,41 +3,54 @@
 //
 
 #include "RestClient.h"
-#include <stdio.h>
 
-std::string paramToString(const http::Param& p){
-    if(p.empty()) return "";
-    auto pb= p.cbegin(), pe= p.cend();
-    std::string data= pb-> first+ "="+ pb-> second;
-    ++ pb;
-    if(pb== pe) return data;
-    for(; pb!= pe; ++ pb)
-        data+= "&"+ pb-> first+ "="+ pb-> second;
+
+std::string restclient::paramToString(const http::Param &p) {
+    if (p.empty()) return "";
+    auto pb = p.cbegin(), pe = p.cend();
+    std::string data = pb->first + "=" + pb->second;
+    ++pb;
+    if (pb == pe) return data;
+    for (; pb != pe; ++pb)
+        data += "&" + pb->first + "=" + pb->second;
     return data;
 }
 
-void restclient::RestClient::get(Request& req, http::CallbackFunc callback) {
-#if __cplusplus >= 201402L
-    auto conn = std::make_unique<http::Connection>(this->baseUrl);
-    return conn->get(req.path, callback);
-#else
-    Http::Connection *conn = new Http::Connection(this->baseUrl);
-    conn->get(url, callback);
-    delete conn;
-#endif
-}
+//void restclient::RestClient::get(const Request &req, http::CallbackFunc callback) {
+//#if __cplusplus >= 201402L
+//    this->worker->enqueue(&http::Connection::get, this->conn, req.path, callback);
+//    return conn->get(req.path, callback);
+//#else
+//    Http::Connection *conn = new Http::Connection(this->baseUrl);
+//    conn->get(url, callback);
+//    delete conn;
+//#endif
+//}
 
 
-void restclient::RestClient::post(Request& req,
-                                  http::CallbackFunc callback) {
-#if __cplusplus >= 201402L
-    auto conn = std::make_unique<http::Connection>(this->baseUrl);
-    return conn->post(req.path, req.contentType, paramToString(req.data).c_str(), callback);
-#else
-    Http::Connection *conn = new Http::Connection(this->baseUrl);
-    conn->post(url, content_type, data, callback);
-    delete conn;
-#endif
+//void restclient::RestClient::post(const Request &req,
+//                                  http::CallbackFunc callback) {
+//#if __cplusplus >= 201402L
+//    auto conn = std::make_unique<http::Connection>(this->baseUrl);
+//    return conn->post(req.path, req.contentType, paramToString(req.data).c_str(), callback);
+//#else
+//    Http::Connection *conn = new Http::Connection(this->baseUrl);
+//    conn->post(url, content_type, data, callback);
+//    delete conn;
+//#endif
+//}
+
+void restclient::RestClient::addRequest(const http::Request &req) {
+    if (strcmp(req.method, "GET") != 0) {
+        this->worker->enqueue(&http::Connection::get, this->conn, req.path, req.contentType, req.callback);
+        return;
+    }
+
+    if (strcmp(req.method, "POST") != 0) {
+        this->worker->enqueue(&http::Connection::post, this->conn, req.path, req.contentType,
+                              paramToString(req.data).c_str(), req.callback);
+        return;
+    }
 }
 
 
