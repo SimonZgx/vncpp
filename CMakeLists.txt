@@ -27,4 +27,4 @@ link_libraries(${OPENSSL_LIB})
 
 link_libraries(${CRYPTO_LIB})
 
-add_executable(main src/main.cpp src/trader/http/connection.cpp)
+add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/gateway/bybit/BybitGateway.cpp src/trader/RestClient.cpp)

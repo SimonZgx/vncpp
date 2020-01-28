@@ -123,6 +123,33 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+src/gateway/bybit/BybitGateway.o: src/gateway/bybit/BybitGateway.cpp.o
+
+.PHONY : src/gateway/bybit/BybitGateway.o
+
+# target to build an object file
+src/gateway/bybit/BybitGateway.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.o
+.PHONY : src/gateway/bybit/BybitGateway.cpp.o
+
+src/gateway/bybit/BybitGateway.i: src/gateway/bybit/BybitGateway.cpp.i
+
+.PHONY : src/gateway/bybit/BybitGateway.i
+
+# target to preprocess a source file
+src/gateway/bybit/BybitGateway.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.i
+.PHONY : src/gateway/bybit/BybitGateway.cpp.i
+
+src/gateway/bybit/BybitGateway.s: src/gateway/bybit/BybitGateway.cpp.s
+
+.PHONY : src/gateway/bybit/BybitGateway.s
+
+# target to generate assembly for a file
+src/gateway/bybit/BybitGateway.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.s
+.PHONY : src/gateway/bybit/BybitGateway.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -149,6 +176,60 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+src/trader/BaseGateway.o: src/trader/BaseGateway.cpp.o
+
+.PHONY : src/trader/BaseGateway.o
+
+# target to build an object file
+src/trader/BaseGateway.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.o
+.PHONY : src/trader/BaseGateway.cpp.o
+
+src/trader/BaseGateway.i: src/trader/BaseGateway.cpp.i
+
+.PHONY : src/trader/BaseGateway.i
+
+# target to preprocess a source file
+src/trader/BaseGateway.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.i
+.PHONY : src/trader/BaseGateway.cpp.i
+
+src/trader/BaseGateway.s: src/trader/BaseGateway.cpp.s
+
+.PHONY : src/trader/BaseGateway.s
+
+# target to generate assembly for a file
+src/trader/BaseGateway.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/BaseGateway.cpp.s
+.PHONY : src/trader/BaseGateway.cpp.s
+
+src/trader/RestClient.o: src/trader/RestClient.cpp.o
+
+.PHONY : src/trader/RestClient.o
+
+# target to build an object file
+src/trader/RestClient.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.o
+.PHONY : src/trader/RestClient.cpp.o
+
+src/trader/RestClient.i: src/trader/RestClient.cpp.i
+
+.PHONY : src/trader/RestClient.i
+
+# target to preprocess a source file
+src/trader/RestClient.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.i
+.PHONY : src/trader/RestClient.cpp.i
+
+src/trader/RestClient.s: src/trader/RestClient.cpp.s
+
+.PHONY : src/trader/RestClient.s
+
+# target to generate assembly for a file
+src/trader/RestClient.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.s
+.PHONY : src/trader/RestClient.cpp.s
 
 src/trader/http/connection.o: src/trader/http/connection.cpp.o
 
@@ -186,9 +267,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main"
+	@echo "... src/gateway/bybit/BybitGateway.o"
+	@echo "... src/gateway/bybit/BybitGateway.i"
+	@echo "... src/gateway/bybit/BybitGateway.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/trader/BaseGateway.o"
+	@echo "... src/trader/BaseGateway.i"
+	@echo "... src/trader/BaseGateway.s"
+	@echo "... src/trader/RestClient.o"
+	@echo "... src/trader/RestClient.i"
+	@echo "... src/trader/RestClient.s"
 	@echo "... src/trader/http/connection.o"
 	@echo "... src/trader/http/connection.i"
 	@echo "... src/trader/http/connection.s"

@@ -15,7 +15,6 @@ int bybit::getCurrentTime() {
 
 bybit::BybitGateway::BybitGateway(std::string &baseUrl, std::string &key, std::string &secret) :
         restClient(restclient::RestClient(baseUrl)) {
-    this->baseUrl = baseUrl;
     this->key = key;
     this->secret = secret;
 };
@@ -30,12 +29,18 @@ bybit::BybitGateway::GetInstance(std::string &basePath, std::string &key, std::s
 
 
 void bybit::BybitGateway::QuerySymbols(http::CallbackFunc callback) {
-    http::Request req((char*)"get", (char*)"/v2/public/symbols", (char*)"", callback);
+    http::Request req("GET", "/v2/public/symbols", "", callback);
     this->restClient.addRequest(std::ref(req));
 }
 
-void bybit::BybitGateway::SetLeverage(int, http::CallbackFunc) {
-
+void bybit::BybitGateway::SetLeverage(int newLeverage, http::CallbackFunc callback) {
+    http::Request req("POST", "/user/leverage/save", "", callback);
+    req.data = new http::Param;
+    (*req.data)["symbol"] = "BTCUSD";
+    (*req.data)["leverage"] = std::to_string(newLeverage);
+    (*req.data)["api_key"] = this->key;
+    req.applySign(this->secret.c_str());
+    this->restClient.addRequest(std::ref(req));
 }
 
 

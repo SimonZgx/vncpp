@@ -79,14 +79,14 @@ size_t http::HeaderCallBackFunction(void *contents, size_t size, size_t nmemb, v
     return size * nmemb;
 }
 
-void http::Connection::performCurlRequest(const char *uri, http::CallbackFunc callback) {
+void http::Connection::performCurlRequest(const char *url, http::CallbackFunc callback) {
     http::Response ret = {};
-    std::string url = std::string(this->baseUrl + uri);
+//    std::string url = std::string(this->baseUrl + uri);
     std::string headerString;
     CURLcode retCode = CURLE_OK;
 
     /** set query URL */
-    curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(this->curl, CURLOPT_URL, url);
     /** set callback function */
     curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION,
                      http::BodyCallBackFunction);
@@ -101,13 +101,13 @@ void http::Connection::performCurlRequest(const char *uri, http::CallbackFunc ca
 }
 
 void http::Connection::get(Request& req) {
-    std::cout<<req.url(this->baseUrl.c_str())<<std::endl;
     this->performCurlRequest(req.url(this->baseUrl.c_str()), req.callback);
 }
 
 void http::Connection::post(http::Request & req) {
     std::string paramStr;
     req.toParamString(paramStr);
+    std::cout<<paramStr<<std::endl;
     curl_easy_setopt(this->curl, CURLOPT_POST, 1L);
     curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, paramStr.c_str());
     curl_easy_setopt(this->curl, CURLOPT_POSTFIELDSIZE, paramStr.length());

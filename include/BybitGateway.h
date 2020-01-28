@@ -9,6 +9,7 @@
 #include <map>
 #include <thread>
 #include <ctime>
+#include <cstring>
 #include "RestClient.h"
 
 
@@ -40,7 +41,6 @@ namespace bybit {
         CURL *curl;
         std::string key;
         std::string secret;
-        std::string baseUrl;
         restclient::RestClient restClient;
     public:
         BybitGateway(std::string&, std::string&, std::string&);

@@ -51,7 +51,6 @@ namespace http {
 
         Request() : data(new Param) {};
 
-        const char *basePath;
         const char *method;
         const char *path;
         const char *contentType;

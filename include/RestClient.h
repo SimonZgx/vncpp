@@ -29,7 +29,6 @@ namespace restclient {
     class RestClient {
     private:
         std::shared_ptr<http::Connection> conn;
-        std::string baseUrl;
         std::shared_ptr<threadpool::ThreadPool> worker;
     public:
 

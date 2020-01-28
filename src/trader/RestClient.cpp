@@ -33,12 +33,12 @@ void sayHello() {
 }
 
 void restclient::RestClient::addRequest(http::Request &req) {
-    if (strcmp(req.method, "GET") != 0) {
+    if (strcmp(req.method, "GET") == 0) {
         this->worker->enqueue(&http::Connection::get, this->conn.get(), req);
         return;
     }
 
-    if (strcmp(req.method, "POST") != 0) {
+    if (strcmp(req.method, "POST") == 0) {
         this->worker->enqueue(&http::Connection::post, this->conn.get(), req);
         return;
     }
