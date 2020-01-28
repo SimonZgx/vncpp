@@ -7,24 +7,20 @@
 
 #include <curl/curl.h>
 #include <string>
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <ctime>
 #include <iostream>
 #include <map>
+#include "openssl/sha.h"
+#include "openssl/hmac.h"
 
 
 namespace http {
 
     using Header = std::map<std::string, std::string>;
     using Param = std::map<std::string, std::string>;
-//    typedef struct {
-//        double totalTime;
-//        double nameLookupTime;
-//        double connectTime;
-//        double appConnectTime;
-//        double preTransferTime;
-//        double startTransferTime;
-//        double redirectTime;
-//        int redirectCount;
-//    } Request;
 
     typedef struct {
         int code;
@@ -46,15 +42,39 @@ namespace http {
 
     size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
 
+    std::string HmacEncode(const char *key, const char *input);
+
     class Request {
     public:
+        Request(const char *method, const char *path, const char *content_type,
+                CallbackFunc callback);
+
+        Request() : data(new Param) {};
+
+        const char *basePath;
         const char *method;
         const char *path;
         const char *contentType;
-        const Param &data;
+
         http::CallbackFunc callback;
 
-        Request(const char *method,const char *path, const char *content_type, const Param &param, http::CallbackFunc callback);
+        //TODO track the time-consuming
+        int redirectCount;
+        double totalTime;
+        double nameLookupTime;
+        double connectTime;
+        double appConnectTime;
+        double preTransferTime;
+        double startTransferTime;
+        double redirectTime;
+
+        Param *data;
+
+        void applySign(const char* secret);
+
+        char *url(const char *baseUrl);
+
+        void toParamString(std::string &ret);
     };
 
     class Connection {
@@ -74,12 +94,9 @@ namespace http {
 
         ~Connection();
 
-        void get(const char *url, const char *contentType, CallbackFunc);
+        void get(Request &);
 
-        void post(const char *url,
-                  const char *content_type,
-                  const char *data,
-                  CallbackFunc);
+        void post(Request &);
 
         void performCurlRequest(const char *uri, CallbackFunc);
     };

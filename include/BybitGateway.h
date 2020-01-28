@@ -30,11 +30,7 @@ namespace bybit {
             "FillOrKill",
     };
 
-    int getCurrentTime(){
-        timeval time;
-        gettimeofday(&time, 0);
-        return time.tv_sec;
-    }
+    int getCurrentTime();
 
     void OnQuerySymbol (CURLcode, const http::Response *);
     void OnSetLeverage(CURLcode, const http::Response *);

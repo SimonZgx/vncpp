@@ -7,6 +7,12 @@
 
 std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
 
+int bybit::getCurrentTime() {
+    timeval time;
+    gettimeofday(&time, 0);
+    return time.tv_sec;
+}
+
 bybit::BybitGateway::BybitGateway(std::string &baseUrl, std::string &key, std::string &secret) :
         restClient(restclient::RestClient(baseUrl)) {
     this->baseUrl = baseUrl;
@@ -24,8 +30,7 @@ bybit::BybitGateway::GetInstance(std::string &basePath, std::string &key, std::s
 
 
 void bybit::BybitGateway::QuerySymbols(http::CallbackFunc callback) {
-    http::Param p;
-    http::Request req((char*)"get", (char*)"/v2/public/symbols", (char*)"", p,callback);
+    http::Request req((char*)"get", (char*)"/v2/public/symbols", (char*)"", callback);
     this->restClient.addRequest(std::ref(req));
 }
 

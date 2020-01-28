@@ -89,6 +89,8 @@ auto ThreadPool::enqueue(F &&f, Args &&... args)
 
 // the destructor joins all threads
 inline ThreadPool::~ThreadPool() {
+    std::cout<<std::this_thread::get_id()<<std::endl;
+    std::cout<<"try to destruct thread pool: "<<this<<std::endl;
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
         stop = true;
@@ -96,6 +98,7 @@ inline ThreadPool::~ThreadPool() {
     condition.notify_all();
     for (std::thread &worker: workers)
         worker.join();
+    std::cout<<"destructed"<<std::endl;
 }
 
 #endif

@@ -123,33 +123,6 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-src/gateway/bybit/BybitGateway.o: src/gateway/bybit/BybitGateway.cpp.o
-
-.PHONY : src/gateway/bybit/BybitGateway.o
-
-# target to build an object file
-src/gateway/bybit/BybitGateway.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.o
-.PHONY : src/gateway/bybit/BybitGateway.cpp.o
-
-src/gateway/bybit/BybitGateway.i: src/gateway/bybit/BybitGateway.cpp.i
-
-.PHONY : src/gateway/bybit/BybitGateway.i
-
-# target to preprocess a source file
-src/gateway/bybit/BybitGateway.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.i
-.PHONY : src/gateway/bybit/BybitGateway.cpp.i
-
-src/gateway/bybit/BybitGateway.s: src/gateway/bybit/BybitGateway.cpp.s
-
-.PHONY : src/gateway/bybit/BybitGateway.s
-
-# target to generate assembly for a file
-src/gateway/bybit/BybitGateway.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/gateway/bybit/BybitGateway.cpp.s
-.PHONY : src/gateway/bybit/BybitGateway.cpp.s
-
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -176,33 +149,6 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
-
-src/trader/RestClient.o: src/trader/RestClient.cpp.o
-
-.PHONY : src/trader/RestClient.o
-
-# target to build an object file
-src/trader/RestClient.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.o
-.PHONY : src/trader/RestClient.cpp.o
-
-src/trader/RestClient.i: src/trader/RestClient.cpp.i
-
-.PHONY : src/trader/RestClient.i
-
-# target to preprocess a source file
-src/trader/RestClient.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.i
-.PHONY : src/trader/RestClient.cpp.i
-
-src/trader/RestClient.s: src/trader/RestClient.cpp.s
-
-.PHONY : src/trader/RestClient.s
-
-# target to generate assembly for a file
-src/trader/RestClient.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/RestClient.cpp.s
-.PHONY : src/trader/RestClient.cpp.s
 
 src/trader/http/connection.o: src/trader/http/connection.cpp.o
 
@@ -231,33 +177,6 @@ src/trader/http/connection.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/http/connection.cpp.s
 .PHONY : src/trader/http/connection.cpp.s
 
-src/trader/thread_pool.o: src/trader/thread_pool.cpp.o
-
-.PHONY : src/trader/thread_pool.o
-
-# target to build an object file
-src/trader/thread_pool.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.o
-.PHONY : src/trader/thread_pool.cpp.o
-
-src/trader/thread_pool.i: src/trader/thread_pool.cpp.i
-
-.PHONY : src/trader/thread_pool.i
-
-# target to preprocess a source file
-src/trader/thread_pool.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.i
-.PHONY : src/trader/thread_pool.cpp.i
-
-src/trader/thread_pool.s: src/trader/thread_pool.cpp.s
-
-.PHONY : src/trader/thread_pool.s
-
-# target to generate assembly for a file
-src/trader/thread_pool.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/trader/thread_pool.cpp.s
-.PHONY : src/trader/thread_pool.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -267,21 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main"
-	@echo "... src/gateway/bybit/BybitGateway.o"
-	@echo "... src/gateway/bybit/BybitGateway.i"
-	@echo "... src/gateway/bybit/BybitGateway.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/trader/RestClient.o"
-	@echo "... src/trader/RestClient.i"
-	@echo "... src/trader/RestClient.s"
 	@echo "... src/trader/http/connection.o"
 	@echo "... src/trader/http/connection.i"
 	@echo "... src/trader/http/connection.s"
-	@echo "... src/trader/thread_pool.o"
-	@echo "... src/trader/thread_pool.i"
-	@echo "... src/trader/thread_pool.s"
 .PHONY : help
 
 

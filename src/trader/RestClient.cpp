@@ -5,17 +5,6 @@
 #include "RestClient.h"
 
 
-std::string restclient::paramToString(const http::Param &p) {
-    if (p.empty()) return "";
-    auto pb = p.cbegin(), pe = p.cend();
-    std::string data = pb->first + "=" + pb->second;
-    ++pb;
-    if (pb == pe) return data;
-    for (; pb != pe; ++pb)
-        data += "&" + pb->first + "=" + pb->second;
-    return data;
-}
-
 //void restclient::RestClient::get(const Request &req, http::CallbackFunc callback) {
 //#if __cplusplus >= 201402L
 //    this->worker->enqueue(&http::Connection::get, this->conn, req.path, callback);
@@ -39,16 +28,18 @@ std::string restclient::paramToString(const http::Param &p) {
 //    delete conn;
 //#endif
 //}
+void sayHello() {
+    std::cout << "hello" << std::endl;
+}
 
-void restclient::RestClient::addRequest(const http::Request &req) {
+void restclient::RestClient::addRequest(http::Request &req) {
     if (strcmp(req.method, "GET") != 0) {
-        this->worker->enqueue(&http::Connection::get, this->conn, req.path, req.contentType, req.callback);
+        this->worker->enqueue(&http::Connection::get, this->conn.get(), req);
         return;
     }
 
     if (strcmp(req.method, "POST") != 0) {
-        this->worker->enqueue(&http::Connection::post, this->conn, req.path, req.contentType,
-                              paramToString(req.data).c_str(), req.callback);
+        this->worker->enqueue(&http::Connection::post, this->conn.get(), req);
         return;
     }
 }

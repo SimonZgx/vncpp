@@ -19,8 +19,6 @@ namespace restclient {
         size_t size;
     } MemoryStruct;
 
-    std::string paramToString(const http::Param &p);
-
     static inline std::string &ltrim(std::string &);
 
     static inline std::string &rtrim(std::string &);
@@ -32,15 +30,15 @@ namespace restclient {
     private:
         std::shared_ptr<http::Connection> conn;
         std::string baseUrl;
-        std::shared_ptr<http::ThreadPool> worker;
+        std::shared_ptr<threadpool::ThreadPool> worker;
     public:
 
         explicit RestClient(std::string &baseUrl) {
             this->conn = std::make_shared<http::Connection>(baseUrl);
-            this->worker = std::make_shared<http::ThreadPool>(std::thread::hardware_concurrency());
+            this->worker = std::make_shared<threadpool::ThreadPool>(std::thread::hardware_concurrency());
         }
 
-        void addRequest(const http::Request &req);
+        void addRequest(http::Request &req);
 
     };
 
