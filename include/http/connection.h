@@ -22,27 +22,7 @@ namespace http {
     using Header = std::map<std::string, std::string>;
     using Param = std::map<std::string, std::string>;
 
-    typedef struct {
-        int code;
-        std::string body;
-        Header header;
-    } Response;
-
-    using CallbackFunc = void (*)(CURLcode, const Response *);
-
-    inline std::string &ltrim(std::string &);
-
-    inline std::string &rtrim(std::string &);
-
-    inline std::string &trim(std::string &);
-
-    size_t SimpleCallBackFunction(void *, size_t, size_t, void *);
-
-    size_t BodyCallBackFunction(void *, size_t, size_t, void *);
-
-    size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
-
-    std::string HmacEncode(const char *key, const char *input);
+    using CallbackFunc = void (*)(void *req, void *res);
 
     class Request {
     public:
@@ -69,12 +49,31 @@ namespace http {
 
         Param *data;
 
-        void applySign(const char* secret);
+        void applySign(const char *secret);
 
         char *url(const char *baseUrl);
 
         void toParamString(std::string &ret);
     };
+
+    typedef struct {
+        int code;
+        std::string body;
+        Header header;
+        CURLcode retCode;
+    } Response;
+
+    inline std::string &ltrim(std::string &);
+
+    inline std::string &rtrim(std::string &);
+
+    inline std::string &trim(std::string &);
+
+    size_t BodyCallBackFunction(void *, size_t, size_t, void *);
+
+    size_t HeaderCallBackFunction(void *, size_t, size_t, void *);
+
+    std::string HmacEncode(const char *key, const char *input);
 
     class Connection {
     private:
@@ -97,7 +96,7 @@ namespace http {
 
         void post(Request &);
 
-        void performCurlRequest(const char *uri, CallbackFunc);
+        void performCurlRequest(http::Request &req);
     };
 }
 

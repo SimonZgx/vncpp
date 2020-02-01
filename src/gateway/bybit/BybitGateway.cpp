@@ -3,7 +3,6 @@
 //
 
 #include "BybitGateway.h"
-#include <memory>
 
 std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
 
@@ -43,21 +42,40 @@ void bybit::BybitGateway::SetLeverage(int newLeverage, http::CallbackFunc callba
     this->restClient.addRequest(std::ref(req));
 }
 
-
-void bybit::OnQuerySymbol(CURLcode httpRetCode, const http::Response *res) {
-    std::cout << "On Query Symbol" << std::endl;
-    if (CURLE_OK != httpRetCode) {
-        std::cout << "Query symbol request error. Error code : " << httpRetCode << std::endl;
-        return;
-    }
-    std::cout << res->body << std::endl;
+void bybit::BybitGateway::PlaceOrder(Order &order, http::CallbackFunc callback) {
+    http::Request req = order.makePlaceRequest(callback);
+    this->restClient.addRequest(std::ref(req));
 }
 
-void bybit::OnSetLeverage(CURLcode httpRetCode, const http::Response *res) {
-    std::cout << "On Set Leverage" << std::endl;
-    if (CURLE_OK != httpRetCode) {
-        std::cout << "On Set Leverage request error. Error code : " << httpRetCode << std::endl;
+
+void bybit::OnQuerySymbol(void *req, void *res) {
+    http::Request *request = nullptr;
+    http::Response *response = nullptr;
+    request = reinterpret_cast<http::Request *>(req);
+    response = reinterpret_cast<http::Response *>(res);
+    std::cout << "On Query Symbol" << std::endl;
+    if (CURLE_OK != response->retCode) {
+        std::cout << "Query symbol request error. Error code : " << response->retCode << std::endl;
         return;
     }
-    std::cout << res->body << std::endl;
+    std::cout << response->body << std::endl;
+}
+
+void bybit::OnSetLeverage(void *req, void *res) {
+    http::Request *request = nullptr;
+    http::Response *response = nullptr;
+    request = reinterpret_cast<http::Request *>(req);
+    response = reinterpret_cast<http::Response *>(res);
+    std::cout << "On Set Leverage" << std::endl;
+    if (CURLE_OK != response->retCode) {
+        std::cout << "On Set Leverage request error. Error code : " << response->retCode << std::endl;
+        return;
+    } else {
+
+    }
+    std::cout << response->body << std::endl;
+}
+
+void bybit::OnResponse(void *req, void *res) {
+
 }

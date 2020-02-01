@@ -24,7 +24,17 @@ find_library(OPENSSL_LIB ssl PATHS /usr/local/Cellar/openssl/1.0.2t/lib NO_DEFAU
 find_library(CRYPTO_LIB crypto PATHS /usr/local/Cellar/openssl/1.0.2t/lib NO_DEFAULT_PATH)
 
 link_libraries(${OPENSSL_LIB})
-
 link_libraries(${CRYPTO_LIB})
 
-add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/gateway/bybit/BybitGateway.cpp src/trader/RestClient.cpp)
+
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+
+find_package(Boost REQUIRED COMPONENTS system)
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIR})
+endif()
+
+add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/gateway/bybit/BybitGateway.cpp src/trader/RestClient.cpp include/type/Order.h src/gateway/bybit/enum.h)

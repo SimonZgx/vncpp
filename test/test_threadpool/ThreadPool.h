@@ -17,26 +17,36 @@
 #include <functional>
 #include <stdexcept>
 
+
+using namespace std;
 class ThreadPool {
 public:
-    ThreadPool(size_t);
+
+    static ThreadPool instance;
+
+    static ThreadPool& getInstance();
+
+    void sayHello(){cout<<"hello \n";}
 
     template<class F, class... Args>
     auto enqueue(F &&f, Args &&... args) -> std::future<typename std::result_of<F(Args...)>::type>;
 
-    ~ThreadPool();
 
 private:
+    explicit ThreadPool(size_t=0);
+    ~ThreadPool();
     // need to keep track of threads so we can join them
     std::vector<std::thread> workers;
     // the task queue
     std::queue<std::function<void()> > tasks;
-
     // synchronization
     std::mutex queue_mutex;
+    static std::mutex lock;
     std::condition_variable condition;
     bool stop;
 };
+
+ThreadPool ThreadPool::instance;
 
 // the constructor just launches some amount of workers
 inline ThreadPool::ThreadPool(size_t threads)
@@ -72,7 +82,6 @@ auto ThreadPool::enqueue(F &&f, Args &&... args)
     auto task = std::make_shared<std::packaged_task<return_type()> >(
             std::bind(std::forward<F>(f), std::forward<Args>(args)...)
     );
-
     std::future<return_type> res = task->get_future();
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
@@ -89,8 +98,6 @@ auto ThreadPool::enqueue(F &&f, Args &&... args)
 
 // the destructor joins all threads
 inline ThreadPool::~ThreadPool() {
-    std::cout<<std::this_thread::get_id()<<std::endl;
-    std::cout<<"try to destruct thread pool: "<<this<<std::endl;
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
         stop = true;
@@ -99,6 +106,10 @@ inline ThreadPool::~ThreadPool() {
     for (std::thread &worker: workers)
         worker.join();
     std::cout<<"destructed"<<std::endl;
+}
+
+ThreadPool& ThreadPool::getInstance() {
+    return instance;
 }
 
 #endif

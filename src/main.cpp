@@ -6,9 +6,10 @@
 #include <future>
 #include <thread>
 #include <ctime>
+#include <cstdio>
 #include "json/json.hpp"
 #include "BybitGateway.h"
-
+#include "type/Order.h"
 using namespace std;
 using json = nlohmann::json;
 
@@ -18,9 +19,14 @@ int main() {
     std::string key = "8cxTAQ8w68MpL58rVb";
     std::string secret = "lcpJ5I4Fabcgx7joliu8ArmpkOvO6dDwnqkq";
     auto *client = new bybit::BybitGateway(baseUrl, key, secret);
-//    client->SetLeverage(30);
-//    client->QuerySymbols();
-    client->SetLeverage(30);
+    Order order;
+    order.side = "Buy";
+    order.volume = 5;
+    order.price = 10000;
+    order.timeInForce = "GoodTillCancel";
+    order.orderType = "Limit";
+    client->PlaceOrder(order);
     std::this_thread::sleep_for(std::chrono::seconds(2));
+
     return 0;
 }

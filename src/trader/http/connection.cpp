@@ -79,14 +79,14 @@ size_t http::HeaderCallBackFunction(void *contents, size_t size, size_t nmemb, v
     return size * nmemb;
 }
 
-void http::Connection::performCurlRequest(const char *url, http::CallbackFunc callback) {
+void http::Connection::performCurlRequest(http::Request& req) {
     http::Response ret = {};
 //    std::string url = std::string(this->baseUrl + uri);
     std::string headerString;
     CURLcode retCode = CURLE_OK;
 
     /** set query URL */
-    curl_easy_setopt(this->curl, CURLOPT_URL, url);
+    curl_easy_setopt(this->curl, CURLOPT_URL, req.url(this->baseUrl.c_str()));
     /** set callback function */
     curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION,
                      http::BodyCallBackFunction);
@@ -94,14 +94,15 @@ void http::Connection::performCurlRequest(const char *url, http::CallbackFunc ca
     curl_easy_setopt(this->curl, CURLOPT_HEADERFUNCTION, http::HeaderCallBackFunction);
     curl_easy_setopt(this->curl, CURLOPT_HEADERDATA, &ret);
     retCode = curl_easy_perform(this->curl);
+    ret.retCode = retCode;
     // free header list
     // reset curl handle
     curl_easy_reset(this->curl);
-    callback(retCode, &ret);
+    req.callback(&ret, &req);
 }
 
 void http::Connection::get(Request& req) {
-    this->performCurlRequest(req.url(this->baseUrl.c_str()), req.callback);
+    this->performCurlRequest(req);
 }
 
 void http::Connection::post(http::Request & req) {
@@ -111,7 +112,7 @@ void http::Connection::post(http::Request & req) {
     curl_easy_setopt(this->curl, CURLOPT_POST, 1L);
     curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, paramStr.c_str());
     curl_easy_setopt(this->curl, CURLOPT_POSTFIELDSIZE, paramStr.length());
-    this->performCurlRequest(req.url(this->baseUrl.c_str()), req.callback);
+    this->performCurlRequest(req);
 }
 
 http::Connection::~Connection() {

@@ -5,7 +5,7 @@
 		<Option title="main"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="clang"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\usr\local\lib\cmake\Boost-1.72.0\;CMake Files\..\..\..\..\usr\local\lib\cmake\boost_headers-1.72.0\;CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/simon/git/vncpp"/>
@@ -47,6 +47,7 @@
 					<Add directory="/usr/local/Cellar/openssl/1.0.2t/include"/>
 					<Add directory="/Users/simon/git/vncpp/include"/>
 					<Add directory="/usr/local/opt/openssl/include"/>
+					<Add directory="/usr/local/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/Users/simon/git/vncpp/Makefile&quot;  VERBOSE=1 main"/>
@@ -65,6 +66,7 @@
 					<Add directory="/usr/local/Cellar/openssl/1.0.2t/include"/>
 					<Add directory="/Users/simon/git/vncpp/include"/>
 					<Add directory="/usr/local/opt/openssl/include"/>
+					<Add directory="/usr/local/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/Users/simon/git/vncpp/Makefile&quot;  VERBOSE=1 main/fast"/>
@@ -74,7 +76,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/simon/git/vncpp/include/type/Order.h">
+			<Option target="main"/>
+		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/gateway/bybit/BybitGateway.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/src/gateway/bybit/enum.h">
 			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/main.cpp">
@@ -91,6 +99,39 @@
 		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/BoostDetectToolset-1.72.0.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/Boost-1.72.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\Boost-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/Boost-1.72.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\Boost-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_headers-1.72.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_headers-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_headers-1.72.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_headers-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/boost_system-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/boost_system-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/libboost_system-variant-mt-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/libboost_system-variant-mt-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/libboost_system-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
+		</Unit>
+		<Unit filename="/Users/simon/git/vncpp/../../../../usr/local/lib/cmake/boost_system-1.72.0/libboost_system-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\boost_system-1.72.0\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
