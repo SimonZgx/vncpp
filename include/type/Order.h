@@ -13,8 +13,8 @@
 struct Order {
     bool reduceOnly;
     bool closeOnTrigger;
-    float price;
-    float volume;
+    std::string price;
+    std::string volume;
     float stopLoss;
     float trailingStop;
     float takeProfit;
@@ -27,30 +27,28 @@ struct Order {
     std::string timeInForce;
     std::string orderLinkID;
 
-    http::Request &makePlaceRequest(http::CallbackFunc callbackFunc) {
-        http::Request req;
+    void makePlaceRequest(http::CallbackFunc callbackFunc, http::Request &req) {
         req.callback = callbackFunc;
         req.path = "/v2/private/order/create";
         req.method = "POST";
 //        orderLinkID =
-        req.data = new http::Param;
         (*req.data)["symbol"] = symbol;
         (*req.data)["side"] = side;
         (*req.data)["order_type"] = orderType;
         (*req.data)["qty"] = volume;
-        (*req.data)["price"] = std::to_string(price);
+        (*req.data)["price"] = price;
         (*req.data)["time_in_force"] = timeInForce;
-        (*req.data)["take_profit"] = std::to_string(takeProfit);
-        (*req.data)["stop_loss"] = std::to_string(stopLoss);
-        (*req.data)["reduce_only"] = std::to_string(reduceOnly);
-        (*req.data)["close_on_trigger"] = std::to_string(closeOnTrigger);
-        (*req.data)["order_link_id"] = vtOrderID;
-        (*req.data)["trailing_stop"] = std::to_string(trailingStop);
+//        (*req.data)["take_profit"] = std::to_string(takeProfit);
+//        (*req.data)["stop_loss"] = std::to_string(stopLoss);
+//        (*req.data)["reduce_only"] = std::to_string(reduceOnly);
+//        (*req.data)["close_on_trigger"] = std::to_string(closeOnTrigger);
+//        (*req.data)["order_link_id"] = vtOrderID;
+//        (*req.data)["trailing_stop"] = std::to_string(trailingStop);
     }
 
-    http::Request &makeCancelRequest() {
-
-    }
+//    http::Request &makeCancelRequest() {
+//
+//    }
 
 };
 

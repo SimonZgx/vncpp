@@ -36,7 +36,7 @@ namespace threadpool {
                                     task = std::move(this->tasks.front());
                                     this->tasks.pop();
                                 }
-
+                                std::cout<<std::this_thread::get_id()<<" get the task"<<std::endl;
                                 task();
                             }
                         }

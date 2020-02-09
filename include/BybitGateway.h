@@ -37,11 +37,22 @@ namespace bybit {
 
     void OnResponse(void *req, void *res);
 
-    void OnOrder(void *req, void *res);
+    inline void OnOrder(void *res, void *req){
+        http::Request *request = nullptr;
+        http::Response *response = nullptr;
+        request = reinterpret_cast<http::Request *>(req);
+        response = reinterpret_cast<http::Response *>(res);
+        if (CURLE_OK != response->retCode) {
+            std::cout << "On Order. Error code : " << response->retCode << std::endl;
+        } else {
 
-    void OnQuerySymbol(void *req, void *res);
+        }
+        std::cout << response->body << std::endl;
+    }
 
-    void OnSetLeverage(void *req, void *res);
+    inline void OnQuerySymbol(void *req, void *res);
+
+    inline void OnSetLeverage(void *req, void *res);
 
     class BybitGateway {
     private:
@@ -56,7 +67,7 @@ namespace bybit {
 
         static std::shared_ptr<BybitGateway> instance;
 
-        void PlaceOrder( Order& order,http::CallbackFunc= OnOrder);
+        void PlaceOrder(Order &order, http::CallbackFunc= OnOrder);
 
         void QuerySymbols(http::CallbackFunc= OnQuerySymbol);
 

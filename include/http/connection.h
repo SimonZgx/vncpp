@@ -7,6 +7,7 @@
 
 #include <curl/curl.h>
 #include <string>
+#include <sstream>
 #include <cstdlib>
 #include <cstring>
 #include <cstdio>
@@ -24,36 +25,38 @@ namespace http {
 
     using CallbackFunc = void (*)(void *req, void *res);
 
-    class Request {
-    public:
-        Request(const char *method, const char *path, const char *content_type,
+    struct Request {
+        Request(const char *method, const char *path,
                 CallbackFunc callback);
 
         Request() : data(new Param) {};
 
         const char *method;
         const char *path;
-        const char *contentType;
+
 
         http::CallbackFunc callback;
 
         //TODO track the time-consuming
-        int redirectCount;
-        double totalTime;
-        double nameLookupTime;
-        double connectTime;
-        double appConnectTime;
-        double preTransferTime;
-        double startTransferTime;
-        double redirectTime;
+        int redirectCount{};
+        double totalTime{};
+        double nameLookupTime{};
+        double connectTime{};
+        double appConnectTime{};
+        double preTransferTime{};
+        double startTransferTime{};
+        double redirectTime{};
 
-        Param *data;
+        Param *data{};
+        Param *header{};
 
         void applySign(const char *secret);
 
         char *url(const char *baseUrl);
 
         void toParamString(std::string &ret);
+
+        std::string toString();
     };
 
     typedef struct {
@@ -91,6 +94,8 @@ namespace http {
         explicit Connection(std::string &baseUrl);
 
         ~Connection();
+
+        void AppendHeader(const std::string &key, const std::string &value);
 
         void get(Request &);
 

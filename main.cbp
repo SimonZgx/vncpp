@@ -79,9 +79,6 @@
 		<Unit filename="/Users/simon/git/vncpp/include/type/Order.h">
 			<Option target="main"/>
 		</Unit>
-		<Unit filename="/Users/simon/git/vncpp/src/gateway/bybit/BybitGateway.cpp">
-			<Option target="main"/>
-		</Unit>
 		<Unit filename="/Users/simon/git/vncpp/src/gateway/bybit/enum.h">
 			<Option target="main"/>
 		</Unit>

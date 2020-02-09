@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(main)
+project(vncpp)
 
 add_definitions(-std=c++14)
 
@@ -37,4 +37,4 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
 endif()
 
-add_executable(main src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/gateway/bybit/BybitGateway.cpp src/trader/RestClient.cpp include/type/Order.h src/gateway/bybit/enum.h)
+add_executable(vncpp src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/trader/RestClient.cpp include/type/Order.h src/gateway/bybit/enum.h)

@@ -28,27 +28,35 @@ bybit::BybitGateway::GetInstance(std::string &basePath, std::string &key, std::s
 
 
 void bybit::BybitGateway::QuerySymbols(http::CallbackFunc callback) {
-    http::Request req("GET", "/v2/public/symbols", "", callback);
+    http::Request req("GET", "/v2/public/symbols", callback);
     this->restClient.addRequest(std::ref(req));
 }
 
 void bybit::BybitGateway::SetLeverage(int newLeverage, http::CallbackFunc callback) {
-    http::Request req("POST", "/user/leverage/save", "", callback);
+    http::Request req("POST", "/user/leverage/save",  callback);
     req.data = new http::Param;
     (*req.data)["symbol"] = "BTCUSD";
     (*req.data)["leverage"] = std::to_string(newLeverage);
     (*req.data)["api_key"] = this->key;
+    req.header = new http::Param;
+    (*req.header)["Content-Type"] = "application/x-www-form-urlencoded";
     req.applySign(this->secret.c_str());
     this->restClient.addRequest(std::ref(req));
 }
 
 void bybit::BybitGateway::PlaceOrder(Order &order, http::CallbackFunc callback) {
-    http::Request req = order.makePlaceRequest(callback);
+    http::Request req;
+    req.data = new http::Param;
+    req.header = new http::Param;
+    (*req.header)["Content-Type"] = "application/x-www-form-urlencoded";
+    (*req.data)["api_key"] = this->key;
+    order.makePlaceRequest(callback, req);
+    req.applySign(this->secret.c_str());
     this->restClient.addRequest(std::ref(req));
 }
 
 
-void bybit::OnQuerySymbol(void *req, void *res) {
+void bybit::OnQuerySymbol(void *res, void *req) {
     http::Request *request = nullptr;
     http::Response *response = nullptr;
     request = reinterpret_cast<http::Request *>(req);
@@ -61,7 +69,7 @@ void bybit::OnQuerySymbol(void *req, void *res) {
     std::cout << response->body << std::endl;
 }
 
-void bybit::OnSetLeverage(void *req, void *res) {
+void bybit::OnSetLeverage(void *res, void *req) {
     http::Request *request = nullptr;
     http::Response *response = nullptr;
     request = reinterpret_cast<http::Request *>(req);
@@ -69,13 +77,12 @@ void bybit::OnSetLeverage(void *req, void *res) {
     std::cout << "On Set Leverage" << std::endl;
     if (CURLE_OK != response->retCode) {
         std::cout << "On Set Leverage request error. Error code : " << response->retCode << std::endl;
-        return;
     } else {
 
     }
     std::cout << response->body << std::endl;
 }
 
-void bybit::OnResponse(void *req, void *res) {
+void bybit::OnResponse(void *res, void *req) {
 
 }
