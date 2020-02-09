@@ -29,26 +29,26 @@ namespace http {
         Request(const char *method, const char *path,
                 CallbackFunc callback);
 
-        Request() : data(new Param) {};
+        Request() : data(new Param), header(new Param) {
+        };
 
-        const char *method;
-        const char *path;
+        const char *method{nullptr};
+        const char *path{nullptr};
 
-
-        http::CallbackFunc callback;
+        http::CallbackFunc callback{nullptr};
 
         //TODO track the time-consuming
-        int redirectCount{};
-        double totalTime{};
-        double nameLookupTime{};
-        double connectTime{};
-        double appConnectTime{};
-        double preTransferTime{};
-        double startTransferTime{};
-        double redirectTime{};
+//        int redirectCount{};
+//        double totalTime{};
+//        double nameLookupTime{};
+//        double connectTime{};
+//        double appConnectTime{};
+//        double preTransferTime{};
+//        double startTransferTime{};
+//        double redirectTime{};
 
-        Param *data{};
-        Param *header{};
+        Param *data;
+        Param *header;
 
         void applySign(const char *secret);
 
@@ -81,21 +81,19 @@ namespace http {
     class Connection {
     private:
 
-        CURL *curl;
+//        CURL *curl;
         std::string baseUrl;
         Header headerFields;
-        int timeout;
-        bool followRedirects;
-        int maxRedirects;
-        bool noSignal;
+//        int timeout{};
+//        bool followRedirects{};
+//        int maxRedirects{};
+//        bool noSignal{};
 
     public:
 
         explicit Connection(std::string &baseUrl);
 
         ~Connection();
-
-        void AppendHeader(const std::string &key, const std::string &value);
 
         void get(Request &);
 

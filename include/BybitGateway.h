@@ -37,7 +37,7 @@ namespace bybit {
 
     void OnResponse(void *req, void *res);
 
-    inline void OnOrder(void *res, void *req){
+    inline void OnOrder(void *res, void *req) {
         http::Request *request = nullptr;
         http::Response *response = nullptr;
         request = reinterpret_cast<http::Request *>(req);
@@ -50,13 +50,15 @@ namespace bybit {
         std::cout << response->body << std::endl;
     }
 
+    inline void OnCancelOrder(void *res, void *req);
+
     inline void OnQuerySymbol(void *req, void *res);
 
     inline void OnSetLeverage(void *req, void *res);
 
     class BybitGateway {
     private:
-        CURL *curl;
+        CURL *curl{nullptr};
         std::string key;
         std::string secret;
         restclient::RestClient restClient;
@@ -68,6 +70,8 @@ namespace bybit {
         static std::shared_ptr<BybitGateway> instance;
 
         void PlaceOrder(Order &order, http::CallbackFunc= OnOrder);
+
+        void CancelOrder(Order &order, http::CallbackFunc= OnCancelOrder);
 
         void QuerySymbols(http::CallbackFunc= OnQuerySymbol);
 

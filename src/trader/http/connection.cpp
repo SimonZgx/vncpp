@@ -7,7 +7,7 @@ http::Connection::Connection(std::string &baseUrl) {
     this->baseUrl = baseUrl;
     std::cout << this->baseUrl << std::endl;
     curl_global_init(CURL_GLOBAL_DEFAULT);
-    this->curl = curl_easy_init();
+//    this->curl = curl_easy_init();
 }
 
 std::string &http::ltrim(std::string &s) {
@@ -27,7 +27,7 @@ std::string &http::trim(std::string &s) {
 }
 
 std::string http::HmacEncode(const char *key, const char *input) {
-    const EVP_MD *engine = NULL;
+    const EVP_MD *engine = nullptr;
     engine = EVP_sha256();
 
     char buf[1024] = {0};
@@ -37,7 +37,7 @@ std::string http::HmacEncode(const char *key, const char *input) {
 
     HMAC_CTX ctx;
     HMAC_CTX_init(&ctx);
-    HMAC_Init_ex(&ctx, key, strlen(key), engine, NULL);
+    HMAC_Init_ex(&ctx, key, strlen(key), engine, nullptr);
     HMAC_Update(&ctx, (unsigned char *) input, strlen(input));        // input is OK; &input is WRONG !!!
 
     HMAC_Final(&ctx, p, &output_length);
@@ -81,18 +81,27 @@ void http::Connection::performCurlRequest(http::Request &req) {
     http::Response res = {};
     std::string headerString;
     CURLcode retCode = CURLE_OK;
-    curl_slist *headerList = NULL;
-    /** set query URL */
+    std::string paramStr;
+    curl_slist *headerList = nullptr;
+    // set query URL
     char *url = req.url(this->baseUrl.c_str());
+    auto curl = curl_easy_init();
+    if (strcmp(req.method, "POST") == 0) {
+        req.toParamString(paramStr);
+        std::cout<<paramStr<<std::endl;
+        curl_easy_setopt(curl, CURLOPT_POST, 1L);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, paramStr.c_str());
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, paramStr.length());
+    }
     curl_easy_setopt(curl, CURLOPT_URL, url);
 
-    /** set callback function */
+    // set callback function
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
                      http::BodyCallBackFunction);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &res);
     curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, http::HeaderCallBackFunction);
     curl_easy_setopt(curl, CURLOPT_HEADERDATA, &res);
-    /** set http headers */
+    // set http headers
     for (auto it = (*req.header).begin(); it != (*req.header).end(); ++it) {
         headerString = it->first;
         headerString += ": ";
@@ -105,6 +114,7 @@ void http::Connection::performCurlRequest(http::Request &req) {
     free(url);
     res.retCode = retCode;
     // free header list
+    curl_slist_free_all(headerList);
     // reset curl handle
     curl_easy_reset(curl);
     req.callback(&res, &req);
@@ -114,28 +124,16 @@ void http::Connection::get(Request &req) {
     this->performCurlRequest(req);
 }
 
-void http::Connection::post(http::Request & req) {
-    std::string paramStr;
-    req.toParamString(paramStr);
-    std::cout << paramStr << std::endl;
-    curl_easy_setopt(curl, CURLOPT_POST, 1L);
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, paramStr.c_str());
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, paramStr.length());
+void http::Connection::post(http::Request &req) {
     this->performCurlRequest(req);
 }
 
-http::Connection::~Connection() {
+http::Connection::~Connection() = default;
 
-}
-
-void http::Connection::AppendHeader(const std::string &key, const std::string &value) {
-    this->headerFields[key] = value;
-}
 
 http::Request::Request(const char *method, const char *path,
                        http::CallbackFunc callback)
-        : method(method), path(path), callback(callback) {
-
+        : method(method), path(path), callback(callback),data(new Param), header(new Param)  {
 }
 
 void http::Request::applySign(const char *secret) {

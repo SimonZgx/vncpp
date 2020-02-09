@@ -7,8 +7,8 @@
 std::shared_ptr<bybit::BybitGateway> bybit::BybitGateway::instance = nullptr;
 
 int bybit::getCurrentTime() {
-    timeval time;
-    gettimeofday(&time, 0);
+    timeval time{};
+    gettimeofday(&time, nullptr);
     return time.tv_sec;
 }
 
@@ -38,23 +38,38 @@ void bybit::BybitGateway::SetLeverage(int newLeverage, http::CallbackFunc callba
     (*req.data)["symbol"] = "BTCUSD";
     (*req.data)["leverage"] = std::to_string(newLeverage);
     (*req.data)["api_key"] = this->key;
-    req.header = new http::Param;
-    (*req.header)["Content-Type"] = "application/x-www-form-urlencoded";
     req.applySign(this->secret.c_str());
     this->restClient.addRequest(std::ref(req));
 }
 
 void bybit::BybitGateway::PlaceOrder(Order &order, http::CallbackFunc callback) {
     http::Request req;
-    req.data = new http::Param;
-    req.header = new http::Param;
-    (*req.header)["Content-Type"] = "application/x-www-form-urlencoded";
     (*req.data)["api_key"] = this->key;
     order.makePlaceRequest(callback, req);
     req.applySign(this->secret.c_str());
     this->restClient.addRequest(std::ref(req));
 }
 
+void bybit::BybitGateway::CancelOrder(Order &order, http::CallbackFunc callback) {
+    http::Request req;
+    (*req.data)["api_key"] = this->key;
+    order.makeCancelRequest(callback, req);
+    req.applySign(this->secret.c_str());
+    this->restClient.addRequest(std::ref(req));
+}
+
+void bybit::OnCancelOrder(void *res, void *req){
+    http::Request *request = nullptr;
+    http::Response *response = nullptr;
+    request = reinterpret_cast<http::Request *>(req);
+    response = reinterpret_cast<http::Response *>(res);
+    std::cout << "On Cancel Order" << std::endl;
+    if (CURLE_OK != response->retCode) {
+        std::cout << "Cancel order error. Error code : " << response->retCode << std::endl;
+        return;
+    }
+    std::cout << response->body << std::endl;
+}
 
 void bybit::OnQuerySymbol(void *res, void *req) {
     http::Request *request = nullptr;

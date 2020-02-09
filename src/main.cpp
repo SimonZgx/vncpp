@@ -23,14 +23,14 @@ int main() {
     Order order;
     order.side = "Buy";
     order.volume = "5";
-    order.price = "10000";
+    order.price = "9000";
     order.timeInForce = "GoodTillCancel";
     order.orderType = "Limit";
     order.symbol="BTCUSD";
 //    client->QuerySymbols();
     client->PlaceOrder(order);
-//    client->SetLeverage(3);
     std::this_thread::sleep_for(std::chrono::seconds(2));
-
+    client->CancelOrder(order);
+//    client->SetLeverage(3);
     return 0;
 }
