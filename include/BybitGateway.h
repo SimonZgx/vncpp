@@ -13,6 +13,7 @@
 #include <cstring>
 #include "type/Order.h"
 #include "RestClient.h"
+#include "websocket.h"
 
 
 namespace bybit {
@@ -81,6 +82,19 @@ namespace bybit {
     class BybitRestClient : restclient::RestClient {
 
     };
+
+    class BybitWebsocket : websocket::Websocket {
+    public:
+        explicit BybitWebsocket(bool isTest);
+        ~BybitWebsocket();
+        void onMessage();
+        void connect();
+
+    private:
+        bool isStop;
+        std::string wsURL;
+    };
+
 }
 
 

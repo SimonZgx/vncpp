@@ -101,3 +101,15 @@ void bybit::OnSetLeverage(void *res, void *req) {
 void bybit::OnResponse(void *res, void *req) {
 
 }
+
+bybit::BybitWebsocket::BybitWebsocket(bool isTest) {
+    if(isTest)
+        this->wsURL = "wss://stream-testnet.bybit.com/realtime";
+    else
+        this->wsURL = "wss://stream.bybit.com/realtime";
+    this->isStop = false;
+}
+
+bybit::BybitWebsocket::~BybitWebsocket() {
+
+}
