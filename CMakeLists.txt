@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(vncpp)
 
-add_definitions(-std=c++14)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_CXX_FLAGS "-fno-elide-constructors ${CMAKE_CXX_FLAGS}")
 add_compile_options(-fno-elide-constructors)
@@ -37,4 +38,10 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
 endif()
 
-add_executable(vncpp src/main.cpp src/trader/http/connection.cpp src/trader/BaseGateway.cpp src/trader/RestClient.cpp include/type/Order.h src/gateway/bybit/enum.h)
+list(APPEND SOURCE_FILE src/trader/http/connection.cpp)
+
+list(APPEND SOURCE_FILE src/trader/BaseGateway.cpp)
+
+message(${SOURCE_FILE})
+
+add_executable(vncpp src/main.cpp  ${SOURCE_FILE} src/trader/RestClient.cpp include/type/Order.h src/gateway/bybit/enum.h)

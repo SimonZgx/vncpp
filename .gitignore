@@ -4,7 +4,6 @@ cmake-build-debug
 out
 *.cmake
 main
-*.txt
 CMakeFiles
 CMakeCache.txt
 Makefile
