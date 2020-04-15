@@ -12,5 +12,8 @@ set(INCLUDE_DIR include
 
 list(APPEND ${SRC_DIR} test.cpp)
 
-add_executable(libevent-test ${SRC_DIR})
+#find_library(libevent /usr/local/lib)
 
+add_executable(test ${SRC_DIR})
+
+target_link_libraries(test event)

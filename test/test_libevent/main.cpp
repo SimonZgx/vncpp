@@ -145,8 +145,10 @@ run() {
     struct event_base *base;
     struct event *listener_event;
     base = event_base_new();
-    if (!base)
+    if (!base) {
+        perror("create event base error");
         return; /*XXXerr*/
+    }
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = 0;
     sin.sin_port = htons(40713);
