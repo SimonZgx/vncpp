@@ -4,6 +4,6 @@
 #include "event_engine/EventEngine.h"
 
 int main() {
-    event_engine::EventEngine engine;
+    EventEngine::EventEngine engine;
 }
 

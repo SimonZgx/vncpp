@@ -5,13 +5,15 @@
 #ifndef VNCPP_EVENTENGINE_H
 #define VNCPP_EVENTENGINE_H
 
-namespace event_engine {
-    class EventEngine {
-    public:
-        EventEngine();
+class EventEngine {
+public:
+    EventEngine();
 
-    };
-}
+    void Start() ;
+
+private:
+
+};
 
 
 #endif //VNCPP_EVENTENGINE_H

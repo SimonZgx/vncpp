@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-using namespace event_engine;
-
 EventEngine::EventEngine() {
     std::cout << "Constructor!!" << std::endl;
 }
