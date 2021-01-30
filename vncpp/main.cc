@@ -1,9 +1,9 @@
 //
 // Created by admin on 2021/1/16.
 //
-#include "event_engine/EventEngine.h"
+#include "event_engine/event_engine.h"
 
 int main() {
-    EventEngine::EventEngine engine;
+    event_engine::event_engine engine;
 }
 
