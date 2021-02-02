@@ -9,6 +9,8 @@
 #include <vector>
 #include <memory>
 
+#include <boost/lockfree/queue.hpp>
+
 #include "const/enum.h"
 
 
