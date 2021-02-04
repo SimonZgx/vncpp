@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(vn-cpp)
 
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(CMAKE_CXX_STANDARD 14)
 
 if (UNIX)
     if (NOT CMAKE_BUILD_TYPE)
@@ -27,11 +28,10 @@ if (UNIX)
             -fms-extensions
             -Wfloat-equal
             -Wextra
-            -std=c++11
             )
 
     include_directories(${PROJECT_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/3rdparty)
-endif (UNIX)
+endif ()
 
 find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})

@@ -8,8 +8,8 @@
 #include <atomic>
 #include <vector>
 #include <memory>
-
-#include <boost/lockfree/queue.hpp>
+#include <unordered_map>
+#include <concurrentqueue/concurrentqueue.h>
 
 #include "const/enum.h"
 
@@ -24,29 +24,39 @@ namespace event_engine {
 
     class EventHandler {
     public:
-        virtual void Handler() = 0;
+        virtual void Init() = 0;
+
+        virtual void Handle(const Event &event) = 0;
+
+        virtual void Quit() = 0;
     };
 
     using EventHandlerPtr = std::shared_ptr<EventHandler>;
 
+
     class EventEngine {
     public:
-        EventEngine();
+        EventEngine(size_t queueSize, size_t workerNum);
+
+        ~EventEngine();
 
         void Start();
 
         void Stop();
 
-        void Put(Event event);
+        void Put(const Event &event);
 
-        void RegisterHandler(EventType type, EventHandlerPtr handler);
-
-        void UnregisterHandler(EventType type, EventHandlerPtr handler);
+        void RegisterHandler(EventType type, const EventHandlerPtr &handler);
 
     private:
+        std::mutex mutex_;
+        std::condition_variable cond_;
+        std::unordered_map<EventType, std::vector<EventHandlerPtr>> handlerMap_;
+        std::atomic_bool active_{};
+        std::vector<std::thread> worker_;
+        moodycamel::ConcurrentQueue<Event> queue_;
 
-        std::atomic_bool active_;
-
+        void Process();
     };
 }
 
