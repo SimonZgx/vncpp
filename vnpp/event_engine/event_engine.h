@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <concurrentqueue/concurrentqueue.h>
 
-#include "const/enum.h"
+#include "../const/enum.h"
 
 
 namespace event_engine {
@@ -33,20 +33,19 @@ namespace event_engine {
 
     using EventHandlerPtr = std::shared_ptr<EventHandler>;
 
-
     class EventEngine {
     public:
         EventEngine(size_t queueSize, size_t workerNum);
 
         ~EventEngine();
 
-        void Start();
+        void start();
 
-        void Stop();
+        void stop();
 
-        void Put(const Event &event);
+        void put(const Event &event);
 
-        void RegisterHandler(EventType type, const EventHandlerPtr &handler);
+        void registerHandler(EventType type, const EventHandlerPtr &handler);
 
     private:
         std::mutex mutex_;
@@ -55,9 +54,9 @@ namespace event_engine {
         std::atomic_bool active_{};
         std::vector<std::thread> worker_;
         moodycamel::ConcurrentQueue<Event> queue_;
-
-        void Process();
     };
+
+    using EventEnginePtr = std::shared_ptr<event_engine::EventEngine>;
 }
 
 

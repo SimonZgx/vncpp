@@ -5,7 +5,7 @@
 #ifndef VNCPP_EVENT_HANDLER_H
 #define VNCPP_EVENT_HANDLER_H
 
-#include "const/enum.h"
+#include "enum.h"
 
 
 
